@@ -9,6 +9,8 @@ html
       h1= currentUser.username
       form(action="/api/users/logout" method="post" name="logoutForm")
         button(type="submit") Log out
+        
+      button.js-button-logout js-button-logout
 
       form(action="/api/users/" + currentUser.username + "/update" method="post" name="updateUserForm")
         input(type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" value=currentUser.username)
