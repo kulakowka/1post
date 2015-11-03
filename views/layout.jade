@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    block head
+      title= pageTitle
+    link(rel='stylesheet', href='/css/app.css')
+  body
+    if currentUser
+      h1= currentUser.username
+      form(action="/api/users/logout" method="post" name="logoutForm")
+        button(type="submit") Log out
+
+      form(action="/api/users/" + currentUser.username + "/update" method="post" name="updateUserForm")
+        input(type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" value=currentUser.username)
+        input(type="password" name="password" placeholder="current password" autocomplete="off" required)
+        input(type="password" name="newPassword" placeholder="new password" autocomplete="off")
+        button(type="submit") Update account
+
+      form(action="/api/users/" + currentUser.username + "/delete" method="post" name="deleteUserForm" onsubmit="retrun confirm('Are you sure?')")
+        input(type="password" name="password" placeholder="current password" autocomplete="off" required)
+        button(type="submit") Delete account
+    else
+      form(action="/api/users/login" method="post" name="loginForm")
+        input(type="text" name="username" placeholder="username" maxLength="20" required)
+        input(type="password" name="password" placeholder="password" required)
+        button(type="submit") Log in
+
+      form(action="/api/users/register" method="post" name="registerForm")
+        input(type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" required)
+        input(type="password" name="password" placeholder="password" autocomplete="off" required)
+        button(type="submit") Register
+
+    
+
+    block content

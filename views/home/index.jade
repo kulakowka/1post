@@ -1,0 +1,17 @@
+//- index.jade
+extends ../layout.jade
+
+block head
+  title= title
+
+block content
+  h1= title
+
+  table
+    tr
+      th id
+      th username
+    each user in users
+      tr
+        td= user.id
+        td= user.username

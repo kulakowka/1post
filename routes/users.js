@@ -1,0 +1,18 @@
+var express = require('express')
+var router = express.Router()
+
+var users = require('../controllers/users')
+var ifUser = require('../middlewares/ifUser')
+var ifGuest = require('../middlewares/ifGuest')
+
+router.get('/', users.index)
+router.get('/:username', users.show)
+
+router.post('/login', ifGuest, users.login)
+router.post('/logout', ifGuest, users.logout)
+router.post('/register', ifGuest, users.register)
+
+router.post('/update', ifUser, users.update)
+router.post('/destroy', ifUser, users.destroy)
+
+module.exports = router
