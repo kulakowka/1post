@@ -9,9 +9,9 @@ router.get('/', users.index)
 router.get('/:username', users.show)
 
 router.post('/login', ifGuest, users.login)
-router.post('/logout', ifGuest, users.logout)
 router.post('/register', ifGuest, users.register)
 
+router.post('/logout', ifUser, users.logout)
 router.post('/update', ifUser, users.update)
 router.post('/destroy', ifUser, users.destroy)
 

@@ -5,8 +5,11 @@ var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var passport = require('./config/passport')
+var helmet = require('helmet')
 
 var app = express()
+
+app.use(helmet())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -19,10 +22,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(require('./config/session'))
-app.use(passport.initialize())
-app.use(passport.session())
 app.use(require('./config/stylus'))
 app.use(require('./config/static'))
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Routes setup
 app.use('/', require('./routes/index'))
