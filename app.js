@@ -23,6 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(require('./config/session'))
 app.use(require('./config/stylus'))
+
+var browserify = require('browserify-middleware')
+// Precompile a browserified file at a path
+app.get('/js/app.js', browserify(path.join(__dirname, 'assets/js/app.js')))
+
 app.use(require('./config/static'))
 app.use(passport.initialize())
 app.use(passport.session())
