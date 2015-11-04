@@ -14,4 +14,5 @@ block content
     each user in users
       tr
         td= user.id
-        td= user.username
+        td
+          a(href="/" + user.username)= user.username

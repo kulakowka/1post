@@ -1,0 +1,17 @@
+extends ../layout.jade
+
+block head
+  title Register
+
+block content
+  h1 Register
+
+  form(action="/api/users/register" method="post" name="registerForm")
+    .field
+      label.field-label(for="username-field") username:
+      input.field-input(id="username-field" type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" required)
+    .field
+      label.field-label(for="password-field") password:
+      input.field-input(id="password-field" type="password" name="password" placeholder="password" autocomplete="off" required)
+    .field
+      button.btn.btn-submit(type="submit") Register

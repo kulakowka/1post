@@ -1,5 +1,67 @@
+greyColor = #eee
+blackColor = #111
+smallFontSize = 13px
+mediumFontSize = 15px
+
+* 
+  -moz-osx-font-smoothing grayscale
+  -webkit-font-smoothing antialiased
+  text-rendering optimizeLegibility
+  font-family helvetica
+
+
+body
+  line-height 1
+
+
+html
+  box-sizing border-box
+
+
+*, 
+*:before, 
+*:after
+  box-sizing inherit
+
+
 body
   padding: 50px
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
 a
   color: #00B7FF
+
+table
+  border-collapse collapse 
+  tr
+    td,
+    th
+      padding 10px
+      border 1px solid greyColor
+     
+/** Buttons */
+.btn
+  border 0
+  padding 5px 10px
+  background greyColor
+  color blackColor
+  font-size mediumFontSize
+.btn-submit
+      
+
+form
+  .field + .field
+    margin-top 20px
+  .field
+    .field-label
+      display inline-block
+      font-size smallFontSize
+      color blackColor
+    .field-label + .field-input
+      margin-top 5px
+    .field-input
+      display block
+      
+
+
+
+

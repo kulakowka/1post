@@ -1,0 +1,29 @@
+extends ../layout.jade
+
+block head
+  title Settings
+
+block content
+  h1 Settings
+  h3 Profile
+  form(action="/api/users/" + currentUser.username + "/update" method="post" name="updateUserForm")
+    .field
+      label.field-label(for="username-field") username:
+      input.field-input(id="username-field" type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" value=currentUser.username)
+    .field
+      label.field-label(for="password-field") current password:
+      input.field-input(id="password-field" type="password" name="password" placeholder="current password" autocomplete="off" required)
+    .field
+      label.field-label(for="newPassword-field") new password:
+      input.field-input(id="newPassword-field" type="password" name="newPassword" placeholder="new password" autocomplete="off")
+    .field
+      button.btn.btn-submit(type="submit") Update account
+  h3 Delete account
+  form(action="/api/users/" + currentUser.username + "/delete" method="post" name="deleteUserForm" onsubmit="retrun confirm('Are you sure?')")
+    .field
+      label.field-label(for="password-2-field") current password:
+      input.field-input(id="password-2-field" type="password" name="password" placeholder="current password" autocomplete="off" required)
+    .field
+      button.btn.btn-submit(type="submit") Delete account
+
+  

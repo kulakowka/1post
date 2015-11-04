@@ -1,0 +1,17 @@
+table
+    tr
+      th
+        h3
+          a(href="/") Sitename
+      if currentUser
+        td
+          a(href="/" + currentUser.username)= currentUser.username
+        td
+          a(href="/settings") Settings
+        td
+          button.js-button-logout Log out  
+      else 
+        td
+          a(href="/login") login      
+        td
+          a(href="/register") register

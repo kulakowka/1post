@@ -1,9 +1,9 @@
 var express = require('express')
 var router = express.Router()
 
-var users = require('../controllers/users')
-var ifUser = require('../middlewares/ifUser')
-var ifGuest = require('../middlewares/ifGuest')
+var users = require('../../controllers/api/users')
+var ifUser = require('../../middlewares/ifUser')
+var ifGuest = require('../../middlewares/ifGuest')
 
 router.get('/', users.index)
 router.get('/:username', users.show)

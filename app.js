@@ -34,7 +34,7 @@ app.use(passport.session())
 
 // Routes setup
 app.use('/', require('./routes/index'))
-app.use('/api/users', require('./routes/users'))
+app.use('/api/users', require('./routes/api/users'))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
