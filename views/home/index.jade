@@ -9,10 +9,8 @@ block content
 
   table
     tr
-      th id
       th username
     each user in users
       tr
-        td= user.id
         td
           a(href="/" + user.username)= user.username

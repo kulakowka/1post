@@ -7,6 +7,7 @@ var passport = require('./config/passport')
 var helmet = require('helmet')
 var browserify = require('browserify-middleware')
 var staticPath = require('./config/static')
+var compression = require('compression')
 
 var app = express()
 
@@ -17,7 +18,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
 // app settings
-
+app.use(compression())
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

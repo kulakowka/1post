@@ -4,9 +4,10 @@ html
     link(rel='stylesheet', href='/css/app.css')
     block head
       title= pageTitle
+    meta(content='width=device-width,initial-scale=1,user-scalable=no' name='viewport')
     
   body
     .layout
       include ./includes/header.jade
       block content
-    script(src="/js/app.js" async defer)
+    script(src='/js/app.js' async defer)
