@@ -1,11 +1,12 @@
 var express = require('express')
 var path = require('path')
-var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var passport = require('./config/passport')
 var helmet = require('helmet')
+var browserify = require('browserify-middleware')
+var staticPath = require('./config/static')
 
 var app = express()
 
@@ -16,25 +17,22 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
 // app settings
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(require('./config/session'))
 app.use(require('./config/stylus'))
-
-var browserify = require('browserify-middleware')
-// Precompile a browserified file at a path
 app.get('/js/app.js', browserify(path.join(__dirname, 'assets/js/app.js')))
-
-app.use(require('./config/static'))
+app.use(staticPath.favicon)
+app.use(staticPath.public)
+app.use(staticPath.static)
 app.use(passport.initialize())
 app.use(passport.session())
 
 // Routes setup
 app.use('/', require('./routes/index'))
-app.use('/api/users', require('./routes/api/users'))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

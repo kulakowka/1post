@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /api
+Disallow: /login
+Disallow: /register
+Disallow: /settings
+
+Disallow: /*/print
+Sitemap: https://moikrug.ru/assets/sitemap.xml.gz
+Host: moikrug.ru
