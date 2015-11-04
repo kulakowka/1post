@@ -5,6 +5,7 @@ html
       title= pageTitle
     link(rel='stylesheet', href='/css/app.css')
   body
-    include ./includes/header.jade
-    block content
+    .layout
+      include ./includes/header.jade
+      block content
     script(src="/js/app.js" async defer)
