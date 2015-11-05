@@ -1,21 +1,17 @@
 header.siteHeader
+  ul.rightMenu
+    if currentUser
+      li
+        a(href="/" + currentUser.username)= currentUser.username
+      li
+        a(href="/settings") settings
+      li
+        a.js-button-logout(href="#") logout  
+    else 
+      li
+        a(href="/login") login      
+      li
+        a(href="/register") register
+  .logo
+    a(href="/") GeekHubs.com
   
-  
-  table
-      tr
-        th
-          a(href="/") GeekHubs.com
-        td(width="100%")
-
-        if currentUser
-          td
-            a(href="/" + currentUser.username)= currentUser.username
-          td
-            a(href="/settings") settings
-          td
-            a.js-button-logout(href="#") logout  
-        else 
-          td
-            a(href="/login") login      
-          td
-            a(href="/register") register
