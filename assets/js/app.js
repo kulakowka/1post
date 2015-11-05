@@ -94,7 +94,7 @@ function onClickReply () {
   replies.find('.commentForm').remove()
   replies.append(replyForm)
   autosize(replyForm.find('textarea'))
-  replyForm.find('textarea').focus()
+  replyForm.find('textarea').val('').focus()
   return false
 }
 

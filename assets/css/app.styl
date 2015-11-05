@@ -2,8 +2,8 @@ greyColor = #ddd
 blackColor = #111
 blueColor = deepskyblue
 smallFontSize = 13px
-mediumFontSize = 15px
-
+mediumFontSize = 14px
+defaultFont = "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
 * 
   -moz-osx-font-smoothing grayscale
   -webkit-font-smoothing antialiased
@@ -12,7 +12,7 @@ mediumFontSize = 15px
 body
   margin 0
   padding 0
-  font-family "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family defaultFont
 
 html
   box-sizing border-box
@@ -32,6 +32,7 @@ button
   -moz-appearance none
   appearance none
   border-radius 0
+  font-family defaultFont
   
 .hidden
   display none
@@ -111,7 +112,7 @@ form
       margin-top 5px
     .field-input
       border 1px solid greyColor
-      font-size smallFontSize
+      font-size mediumFontSize
       display block
       padding 5px
       
@@ -131,7 +132,7 @@ body
   textarea
     width 100%
     //min-height 1.6em
-    font-size 13px
+    font-size mediumFontSize
     line-height 1.6em
     padding 5px
     margin 0
@@ -154,7 +155,7 @@ body
 
 .commentItem
   .textHtml
-    font-size 13px
+    font-size mediumFontSize
     line-height 1.6em
     //background yellow
     p
@@ -185,7 +186,7 @@ body
     
     
   .meta
-    font-size 12px
+    font-size smallFontSize - 1
     margin-top 10px
     .repliesCount,
     .reply,
@@ -212,7 +213,7 @@ body
 code
   background: rgba(0,0,0,0.03)
   border: 0px solid rgba(0,0,0,0.14)
-  font-size: 13px
+  font-size: mediumFontSize - 1
   line-height: 1.4em
   padding: 0.1em 0.4em
   border-radius: 5px
