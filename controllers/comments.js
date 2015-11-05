@@ -28,7 +28,6 @@ module.exports.replies = (req, res, next) => {
   var parentId = req.params.id
   var sort = ROOT_PARENT_ID.equals(parentId) ? -1 : 1
 
-  console.log(sort)
   Comment
     .find({parentId: parentId})
     .populate({

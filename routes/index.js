@@ -4,10 +4,12 @@ var router = express.Router()
 var users = require('../controllers/users')
 var comments = require('../controllers/comments')
 var currentUser = require('../middlewares/currentUser')
+var templateHelpers = require('../middlewares/templateHelpers')
 var ifUser = require('../middlewares/ifUser')
 var ifGuest = require('../middlewares/ifGuest')
 
 router.use(currentUser)
+router.use(templateHelpers)
 
 router.get('/', comments.index)
 router.get('/comments/:id', comments.show)

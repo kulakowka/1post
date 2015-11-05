@@ -27,6 +27,9 @@ html
 
 a
   color blueColor
+  text-decoration none
+  &:hover
+    text-decoration underline
 
 table
   border-collapse collapse 
@@ -75,9 +78,10 @@ form
   margin auto
   padding 20px
 
-.replies .commentForm
-  margin-top 20px
+
 .commentForm
+  .field
+    position relative
   textarea
     width 100%
     //min-height 1.6em
@@ -89,39 +93,53 @@ form
     background transparent
     border 1px solid #ddd
     resize none
+  
  
   textarea:focus 
-    outline-style solid
-    outline-width 2px
+    outline 2px solid blueColor
 
-
+.replies .commentForm
+  margin-top 30px
 .replies .commentItem
-  margin-top 20px
+  margin-top 30px
 .commentItem + .commentItem
-  margin-top 20px
+  margin-top 30px
+
 .commentItem
   .textHtml
-    font-size 16px
+    font-size 13px
     line-height 1.6em
     //background yellow
+    p
+      line-height 1.6em
+    h1, h2, h3, h4, h5, h6
+      line-height 1.2em
+    
     p, h1, h2, h3, h4, h5, h6
+      
       &:first-child
         margin-top 0
       &:last-child
         margin-bottom 0
     
   .meta
-    font-size smallFontSize
-    color #aaa
+    font-size 12px
+    color #aaa  
+    margin-top 10px
     .repliesCount,
     .creator,
     .createdAt,
     .permalink,
     .parentId
+      color #aaa
       margin-right 20px
   .replies
     margin-left 20px            
 
+.commentItem.commentRoot      
+  > .replies
+    margin-left 0px
+      
 code
   background: rgba(0,0,0,0.03)
   border: 0px solid rgba(0,0,0,0.14)

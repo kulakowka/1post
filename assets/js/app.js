@@ -42,11 +42,13 @@ function userDestroy () {
 }
 
 function commentCreate () {
-  var data = $(this).serialize()
+  var form = this
+  var data = $(form).serialize()
   $.post('/api/comments/create', data, function (json) {
     loadReplies(json.comment.parentId)
-    // if (json.user) document.location.href = '/' + json.user.username
+    form.reset()
   }, 'json')
+
   return false
 }
 
@@ -57,6 +59,7 @@ function loadReplies (id) {
   $.get('/comments/' + id + '/replies', function (html) {
     replies.html(html)
     autosize(comment.find('.commentForm textarea').addClass('autosized'))
+    executeImages()
   }, 'html')
 }
 
@@ -79,6 +82,14 @@ function initTextareaAutosize () {
   autosize($('textarea.js-textarea-autosize').addClass('autosized'))
 }
 
+function executeImages () {
+  $('.js-link-image').each(function () {
+    var img = $('<img>')
+    img.attr('src', $(this).attr('href'))
+    $(this).html(img)
+  })
+}
+
 var $document = $(document)
 $document.on('click', '.js-button-logout', logout)
 $document.on('submit', '.js-form-login', login)
@@ -89,3 +100,4 @@ $document.on('submit', '.js-form-comment', commentCreate)
 $document.on('click', '.js-comment-replies', onClickRepliesCount)
 $document.on('ready', loadInitialComments)
 $document.on('ready', initTextareaAutosize)
+$document.on('ready', executeImages)

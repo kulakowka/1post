@@ -4,14 +4,11 @@
     a.repliesCount.js-comment-replies(href="/comments/" + comment._id data-id=comment._id.toString())
       b= comment.repliesCount
       = " replies"
-    a.creator(href="/" + comment.creator.username)= comment.creator.username
-    span.createdAt= moment(comment.createdAt).toNow(true)
-    a.permalink(href="/comments/" + comment._id)
-      ="#"
-      = comment._id
-    
+    a.creator(href="/" + comment.creator.username)
+      = "@"
+      = comment.creator.username
+    a.createdAt(href="/comments/" + comment._id)= moment(comment.createdAt).toNow(true)
+  
     if !comment.parentId.equals(ROOT_PARENT_ID)
-      a.parentId(href="/comments/" + comment.parentId)
-        ="Parent:"
-        = comment.parentId
+      a.parentId(href="/comments/" + comment.parentId) parent
   .replies
