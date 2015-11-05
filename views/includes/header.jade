@@ -1,16 +1,21 @@
-h3
-  a(href="/") Sitename
-table
-    tr
-      if currentUser
-        td
-          a(href="/" + currentUser.username)= currentUser.username
-        td
-          a(href="/settings") Settings
-        td
-          a.js-button-logout(href="#") Log out  
-      else 
-        td
-          a(href="/login") login      
-        td
-          a(href="/register") register
+header.siteHeader
+  
+  
+  table
+      tr
+        th
+          a(href="/") GeekHubs.com
+        td(width="100%")
+
+        if currentUser
+          td
+            a(href="/" + currentUser.username)= currentUser.username
+          td
+            a(href="/settings") settings
+          td
+            a.js-button-logout(href="#") logout  
+        else 
+          td
+            a(href="/login") login      
+          td
+            a(href="/register") register

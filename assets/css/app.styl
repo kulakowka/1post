@@ -17,6 +17,8 @@ body
 html
   box-sizing border-box
 
+img 
+  max-width 100%
 
 *, 
 *:before, 
@@ -31,6 +33,10 @@ a
   &:hover
     text-decoration underline
 
+.siteHeader
+  background-color #eee
+  margin-bottom 40px
+  
 table
   border-collapse collapse 
   tr
@@ -75,8 +81,7 @@ form
 .layout
   // background ghostwhite
   max-width 800px
-  margin auto
-  padding 20px
+  margin 0 auto
 
 
 .commentForm
@@ -85,7 +90,7 @@ form
   textarea
     width 100%
     //min-height 1.6em
-    font-size 16px
+    font-size 13px
     line-height 1.6em
     padding 5px
     margin 0
@@ -121,6 +126,21 @@ form
         margin-top 0
       &:last-child
         margin-bottom 0
+    blockquote
+      color #666
+      margin 0
+      padding 0
+      padding-left 14px
+      font-style italic
+      position relative
+      &:before
+        content '>'
+        position absolute
+        left 0
+        top 0
+      
+
+    
     
   .meta
     font-size 12px
