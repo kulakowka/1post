@@ -64,14 +64,10 @@ Comment.static('updateRepliesCount', function (id) {
     .where({ parentId: id })
     .count((err, count) => {
       if (err) return
-      console.log('------')
-      console.log('updateRepliesCount', count, id)
-      // здесб count - это сколько ответов у коммента id
       model
         .findOneAndUpdate({_id: id}, {repliesCount: count})
         .exec((error, result) => {
           if (error) console.log(error)
-          console.log('repliesCount updated', result)
         })
     })
 })

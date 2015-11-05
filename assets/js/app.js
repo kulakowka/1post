@@ -43,11 +43,22 @@ function userDestroy () {
 
 function commentCreate () {
   var form = this
+  var id = $(form).find('input[name="parentId"]').val()
+  var isRoot = $('.commentRoot').attr('id') === 'comment_' + id
   var data = $(form).serialize()
-  $.post('/api/comments/create', data, function (json) {
-    loadReplies(json.comment.parentId)
-    form.reset()
-  }, 'json')
+  var replies = $('#comment_' + id).find('> .replies')
+
+  $.post('/comments/create', data, function (html) {
+    if (isRoot) {
+      replies.prepend(html)
+      form.reset()
+      autosize.update($(form).find('textarea'))
+    } else {
+      replies.append(html)
+      $(form).remove()
+    }
+    executeImages()
+  }, 'html')
 
   return false
 }
@@ -58,7 +69,7 @@ function loadReplies (id) {
 
   $.get('/comments/' + id + '/replies', function (html) {
     replies.html(html)
-    autosize(comment.find('.commentForm textarea').addClass('autosized'))
+    autosize(comment.find('.commentForm textarea'))
     executeImages()
   }, 'html')
 }
@@ -82,6 +93,7 @@ function onClickReply () {
   replyForm.find('input[name="parentId"]').val(id)
   replies.find('.commentForm').remove()
   replies.append(replyForm)
+  autosize(replyForm.find('textarea'))
   replyForm.find('textarea').focus()
   return false
 }
@@ -93,7 +105,7 @@ function loadInitialComments () {
 }
 
 function initTextareaAutosize () {
-  autosize($('textarea.js-textarea-autosize').addClass('autosized'))
+  autosize($('textarea.js-textarea-autosize'))
 }
 
 function executeImages () {
@@ -105,6 +117,7 @@ function executeImages () {
 }
 
 var $document = $(document)
+
 $document.on('click', '.js-button-logout', logout)
 $document.on('submit', '.js-form-login', login)
 $document.on('submit', '.js-form-register', register)

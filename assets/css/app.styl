@@ -24,8 +24,17 @@ img
 *:before, 
 *:after
   box-sizing inherit
-  
 
+input,
+textarea,
+button
+  -webkit-appearance none
+  -moz-appearance none
+  appearance none
+  border-radius 0
+  
+.hidden
+  display none
 
 a
   color blueColor
@@ -35,9 +44,10 @@ a
 
 .siteHeader
   background-color blueColor
-  margin-bottom 40px
+  margin 0 -10px 20px
   overflow hidden
-  
+  @media all and (min-width: 800px)
+    margin 0 -20px 20px
   .logo
     a
       font-size 20px
@@ -52,7 +62,8 @@ a
     margin 0
     padding 0
     li + li
-      margin-left 20px
+      @media all and (min-width: 800px)
+        margin-left 20px
     li
       margin 0
       padding 0
@@ -104,13 +115,15 @@ form
       display block
       padding 5px
       
-
+body 
+  background ghostwhite
 .layout
-  background rgba(246, 246, 239, 0.5) //ghostwhite
+  background white //rgba(246, 246, 239, 0.5) //ghostwhite
   max-width 800px
   margin 0 auto
-  padding 0 20px
-
+  padding 0 10px 20px
+  @media all and (min-width: 800px)
+    padding 0 20px 20px
 
 .commentForm
   .field
@@ -126,6 +139,7 @@ form
     background transparent
     border 1px solid #ddd
     resize none
+    border-radius 0
   
  
   textarea:focus 
@@ -240,6 +254,7 @@ pre code
 .lang-cpp .hljs-preprocessor,
 .lang-c .hljs-preprocessor,
 .lang-javascript .hljs-regexp,
+.lang-html .hljs-attribute,
 .lang-json .hljs-attribute,
 .lang-makefile .hljs-variable,
 .lang-markdown .hljs-value,
@@ -266,6 +281,7 @@ pre code
 .lang-haskell .hljs-type,
 .lang-java .hljs-javadoctag,
 .lang-javascript .hljs-tag,
+.lang-html .hljs-value,
 .lang-javascript .hljs-javadoctag,
 .lang-nginx .hljs-title,
 .lang-objectivec .hljs-preprocessor,
@@ -303,6 +319,7 @@ pre code
 .lang-haskell .hljs-number,
 .lang-http .hljs-literal,
 .lang-http .hljs-attribute,
+.lang-html .hljs-title,
 .lang-java .hljs-number,
 .lang-javascript .hljs-built_in,
 .lang-javascript .hljs-literal,

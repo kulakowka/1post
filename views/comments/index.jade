@@ -8,7 +8,8 @@ block content
   
   #commentsIndex
 
-  include ./includes/form.jade
+  if currentUser
+    include ./includes/form.jade
   .commentItem.commentRoot(id="comment_" + ROOT_PARENT_ID)
     .replies
       each comment in comments

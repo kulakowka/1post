@@ -15,7 +15,7 @@ passport.use(new LocalStrategy((username, password, done) => {
         return done(null, user)
       })
 
-      user.deletedAt = null
+      user.deletedAt = undefined
       user.isDeleted = false
       user.save()
     })

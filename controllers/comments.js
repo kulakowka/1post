@@ -68,3 +68,38 @@ module.exports.show = (req, res, next) => {
       })
     })
 }
+
+module.exports.reply = (req, res, next) => {
+  // /comments/213123/reply
+  Comment
+    .findById(req.params.id)
+    .populate({
+      path: 'creator',
+      select: 'username'
+    })
+    .select('-textSource')
+    .exec((err, comment) => {
+      if (err) return next(err)
+      if (!comment) return res.status(404).render('error', {error: 'Comment not found'})
+      res.render('comments/includes/comment', {
+        comment,
+        parentId: comment._id,
+        ROOT_PARENT_ID: ROOT_PARENT_ID
+      })
+    })
+}
+
+module.exports.create = (req, res, next) => {
+  var comment = new Comment({
+    textSource: req.body.textSource,
+    parentId: req.body.parentId,
+    creator: req.user._id
+  })
+
+  comment.save((err, comment) => {
+    if (err) return next(err)
+    res.redirect('/comments/' + comment._id + '/reply')
+    // обновим кол-во комментов у родителя
+    Comment.updateRepliesCount(comment.parentId)
+  })
+}
