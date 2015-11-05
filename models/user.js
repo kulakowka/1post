@@ -20,6 +20,14 @@ var User = mongoose.Schema({
   }
 })
 
+var createdAt = require('./plugins/createdAt')
+var updatedAt = require('./plugins/updatedAt')
+var deletedAt = require('./plugins/deletedAt')
+
+User.plugin(createdAt, { index: true })
+User.plugin(updatedAt)
+User.plugin(deletedAt)
+
 User.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return callback(err)

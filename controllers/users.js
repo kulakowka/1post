@@ -1,9 +1,21 @@
 var User = require('../models/user')
 
+module.exports.index = (req, res, next) => {
+  User
+    .find()
+    .limit(20)
+    .sort({ createdAt: -1 })
+    .select('-password')
+    .exec((err, users) => {
+      if (err) return next(err)
+      res.render('users/index', {users, title: 'home page'})
+    })
+}
+
 module.exports.show = (req, res, next) => {
   User
     .findOne({username: req.params.username})
-    .select({ username: 1, _id: 1 })
+    .select('-password')
     .exec((err, user) => {
       if (err) return next(err)
       if (!user) return res.status(404).render('error', {error: 'User not found'})

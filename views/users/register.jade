@@ -6,7 +6,7 @@ block head
 block content
   h1 Register
 
-  form(action="/api/users/register" method="post" name="registerForm")
+  form.js-form-register
     .field
       label.field-label(for="username-field") username:
       input.field-input(id="username-field" type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" required)

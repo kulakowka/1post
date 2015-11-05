@@ -4,6 +4,8 @@ block head
   title= user.username
 
 block content
-  h1= user.username
-
+  if user.isDeleted
+    h1 User deleted
+  else
+    h1= user.username
   

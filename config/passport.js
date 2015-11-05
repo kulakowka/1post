@@ -4,16 +4,20 @@ var User = require('../models/user')
 
 passport.use(new LocalStrategy((username, password, done) => {
   User
-    .findOne({ username: new RegExp(username, 'i') })
+    .findOne({ username: username.toLowerCase() })
     .exec((err, user) => {
       if (err) return done(err)
       if (!user) return done(null, false)
 
-      user.comparePassword(password, (err, isMatch) => {
+      user.comparePassword(password, (err, isValid) => {
         if (err) return done(err)
-        if (!isMatch) return done(null, false)
+        if (!isValid) return done(null, false)
         return done(null, user)
       })
+
+      user.deletedAt = null
+      user.isDeleted = false
+      user.save()
     })
 }))
 

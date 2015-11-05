@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/express_app_v3'
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/express_app_v4'
 
 mongoose.connect(MONGO_URL)
 
