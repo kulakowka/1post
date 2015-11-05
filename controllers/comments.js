@@ -25,14 +25,18 @@ module.exports.index = (req, res, next) => {
 
 // Load comments replies via ajax (for first time)
 module.exports.replies = (req, res, next) => {
+  var parentId = req.params.id
+  var sort = ROOT_PARENT_ID.equals(parentId) ? -1 : 1
+
+  console.log(sort)
   Comment
-    .find({parentId: req.params.id})
+    .find({parentId: parentId})
     .populate({
       path: 'creator',
       select: 'username'
     })
     .limit(20)
-    .sort({ createdAt: 1 })
+    .sort({ createdAt: sort })
     .select('-textSource')
     .exec((err, comments) => {
       if (err) return next(err)

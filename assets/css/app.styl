@@ -22,6 +22,8 @@ html
 *:before, 
 *:after
   box-sizing inherit
+  
+
 
 a
   color blueColor
@@ -41,6 +43,9 @@ table
   background-color greyColor
   color blackColor
   font-size mediumFontSize
+  &:focus 
+    outline-style solid
+    outline-width 2px
 .btn-submit
   color white
   font-weight bold
@@ -70,10 +75,12 @@ form
   margin auto
   padding 20px
 
+.replies .commentForm
+  margin-top 20px
 .commentForm
   textarea
     width 100%
-    min-height 50px
+    //min-height 1.6em
     font-size 16px
     line-height 1.6em
     padding 5px
@@ -81,18 +88,28 @@ form
     display block
     background transparent
     border 1px solid #ddd
+    resize none
+ 
+  textarea:focus 
+    outline-style solid
+    outline-width 2px
 
+
+.replies .commentItem
+  margin-top 20px
 .commentItem + .commentItem
-  margin-top 40px
+  margin-top 20px
 .commentItem
   .textHtml
     font-size 16px
     line-height 1.6em
-    h1
-      padding-bottom: 0.3em
-      font-size: 2.25em
-      line-height: 1.2
-      border-bottom: 1px solid #eee
+    //background yellow
+    p, h1, h2, h3, h4, h5, h6
+      &:first-child
+        margin-top 0
+      &:last-child
+        margin-bottom 0
+    
   .meta
     font-size smallFontSize
     color #aaa
@@ -103,11 +120,7 @@ form
     .parentId
       margin-right 20px
   .replies
-    padding-left 20px
-    // outline 1px solid pink
-      
-
-
+    margin-left 20px            
 
 code
   background: rgba(0,0,0,0.03)

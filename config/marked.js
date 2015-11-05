@@ -8,9 +8,8 @@ var marked = require('marked')
 var highlightjs = require('highlight.js')
 
 marked.setOptions({
-  renderer: new marked.Renderer(),
   gfm: true,
-  tables: true,
+  tables: false,
   breaks: false,
   pedantic: false,
   sanitize: true,

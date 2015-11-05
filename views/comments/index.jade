@@ -9,8 +9,9 @@ block content
   #commentsIndex
 
   include ./includes/form.jade
-  
-  each comment in comments
-    include ./includes/comment.jade
+  .commentItem.commentRoot(id="comment_" + ROOT_PARENT_ID)
+    .replies
+      each comment in comments
+        include ./includes/comment.jade
 
   

@@ -1,5 +1,6 @@
 each comment in comments
   include ./includes/comment.jade
 
-include ./includes/form.jade
+if !ROOT_PARENT_ID.equals(parentId)
+  include ./includes/form.jade
 
