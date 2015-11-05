@@ -72,6 +72,20 @@ function onClickRepliesCount () {
   return false
 }
 
+function onClickReply () {
+  var link = $(this)
+  var id = link.attr('data-id')
+  var form = $('.commentForm').first()
+  var replyForm = form.clone()
+  var comment = link.closest('.commentItem')
+  var replies = comment.find('> .replies')
+  replyForm.find('input[name="parentId"]').val(id)
+  replies.find('.commentForm').remove()
+  replies.append(replyForm)
+  replyForm.find('textarea').focus()
+  return false
+}
+
 function loadInitialComments () {
   var comment = $('#commentsShow > .commentItem').first()
   if (!comment.length) return
@@ -98,6 +112,8 @@ $document.on('submit', '.js-form-user-update', userUpdate)
 $document.on('submit', '.js-form-user-destroy', userDestroy)
 $document.on('submit', '.js-form-comment', commentCreate)
 $document.on('click', '.js-comment-replies', onClickRepliesCount)
+$document.on('click', '.js-comment-reply', onClickReply)
+
 $document.on('ready', loadInitialComments)
 $document.on('ready', initTextareaAutosize)
 $document.on('ready', executeImages)
