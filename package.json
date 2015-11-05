@@ -10,6 +10,7 @@
     "test"
   ],
   "dependencies": {
+    "autosize": "^3.0.13",
     "bcrypt": "^0.8.5",
     "body-parser": "~1.13.2",
     "browserify-middleware": "^7.0.0",
@@ -20,8 +21,10 @@
     "express": "~4.13.1",
     "express-session": "^1.12.1",
     "helmet": "^0.14.0",
+    "highlight.js": "^8.9.1",
     "jade": "~1.11.0",
     "jquery": "^2.1.4",
+    "marked": "^0.3.5",
     "moment": "^2.10.6",
     "mongodb": "^2.0.47",
     "mongoose": "^4.2.4",

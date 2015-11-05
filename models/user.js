@@ -2,8 +2,8 @@
 
 var bcrypt = require('bcrypt')
 var mongoose = require('../config/db')
-
-var User = mongoose.Schema({
+var Schema = mongoose.Schema
+var User = Schema({
   username: {
     type: String,
     index: true,
@@ -17,7 +17,11 @@ var User = mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
+  }]
 })
 
 var createdAt = require('./plugins/createdAt')

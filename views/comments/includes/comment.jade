@@ -1,0 +1,17 @@
+.commentItem(id="comment_" + comment._id)
+  .textHtml!= comment.textHtml
+  .meta
+    a.repliesCount.js-comment-replies(href="/comments/" + comment._id data-id=comment._id.toString())
+      b= comment.repliesCount
+      = " replies"
+    a.creator(href="/" + comment.creator.username)= comment.creator.username
+    span.createdAt= moment(comment.createdAt).toNow(true)
+    a.permalink(href="/comments/" + comment._id)
+      ="#"
+      = comment._id
+    
+    if !comment.parentId.equals(ROOT_PARENT_ID)
+      a.parentId(href="/comments/" + comment.parentId)
+        ="Parent:"
+        = comment.parentId
+  .replies
