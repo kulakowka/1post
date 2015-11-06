@@ -23,7 +23,7 @@ renderer.link = function (href, title, text) {
       return ''
     }
   }
-  var out = '<a href="' + href + '" rel="nofollow"'
+  var out = '<a href="' + href + '" rel="nofollow" target="_blank"'
 
   if (title) {
     out += ' title="' + title + '"'

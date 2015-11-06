@@ -8,6 +8,7 @@
     font-size mediumFontSize
     line-height 1.6em
     //background yellow
+    overflow hidden
     p
       line-height 1.6em
     h1, h2, h3, h4, h5, h6
@@ -32,25 +33,26 @@
         left 0
         top 0
       
-
-    
-    
   .meta
     font-size smallFontSize - 1
-    margin-top 10px
+    line-height 30px
+    margin-top 5px
+    
     .repliesCount,
     .reply,
     .creator,
     .createdAt,
     .permalink,
     .parentId
+      display inline-block
       margin-right 20px
+      
     .repliesCount,
     .creator,
     .createdAt,
     .permalink,
     .parentId
-      color #aaa
+      color darkGreyColor
     .reply
       font-weight bold
   .replies

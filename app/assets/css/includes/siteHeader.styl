@@ -2,7 +2,7 @@
   background-color blueColor
   margin 0 -10px 20px
   overflow hidden
-  @media all and (min-width: 800px)
+  @media all and (min-width: minWidth)
     margin 0 -20px 20px
   .logo
     a
@@ -10,7 +10,7 @@
       line-height 40px
       display inline-block
       padding 0 10px
-      color white
+      color whiteColor
     a:hover
       text-decoration none
   ul.rightMenu
@@ -18,7 +18,7 @@
     margin 0
     padding 0
     li + li
-      @media all and (min-width: 800px)
+      @media all and (min-width: minWidth)
         margin-left 20px
     li
       margin 0
@@ -27,6 +27,6 @@
       a
         display inline-block
         line-height 40px
-        font-size 13px
+        font-size smallFontSize
         padding 0 10px
-        color white
+        color whiteColor

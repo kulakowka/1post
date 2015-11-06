@@ -42,11 +42,24 @@ function loadReplies (id) {
   }, 'html')
 }
 
+function clearReplies (id) {
+  var comment = $('#comment_' + id)
+  var replies = comment.find('> .replies')
+
+  replies.html('')
+}
+
 function onClickRepliesCount () {
   var link = $(this)
   var id = link.attr('data-id')
 
-  loadReplies(id)
+  if (link.hasClass('loaded')) {
+    clearReplies(id)
+    link.removeClass('loaded')
+  } else {
+    loadReplies(id)
+    link.addClass('loaded')
+  }
 
   return false
 }
