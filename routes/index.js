@@ -11,14 +11,16 @@ var ifGuest = require('../middlewares/ifGuest')
 router.use(currentUser)
 router.use(templateHelpers)
 
+router.use('/api/users', require('./api/users'))
+router.use('/api/comments', require('./api/comments'))
+
 router.get('/', comments.index)
 router.post('/comments/create', comments.create)
 router.get('/comments/:id', comments.show)
 router.get('/comments/:id/reply', comments.reply)
 router.get('/comments/:id/replies', comments.replies)
+
 router.get('/users', users.index)
-router.use('/api/users', require('./api/users'))
-router.use('/api/comments', require('./api/comments'))
 router.get('/settings', ifUser, users.settings)
 router.get('/login', ifGuest, users.login)
 router.get('/register', ifGuest, users.register)

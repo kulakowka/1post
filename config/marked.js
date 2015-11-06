@@ -8,6 +8,8 @@ var marked = require('marked')
 var highlightjs = require('highlight.js')
 var renderer = new marked.Renderer()
 
+const IMG_REGEXP = /\.(png|jpg|gif|jpeg)$/i
+
 renderer.link = function (href, title, text) {
   if (this.options.sanitize) {
     try {
@@ -21,12 +23,13 @@ renderer.link = function (href, title, text) {
       return ''
     }
   }
-  var out = '<a href="' + href + '"'
+  var out = '<a href="' + href + '" rel="nofollow"'
+
   if (title) {
     out += ' title="' + title + '"'
   }
-  var reg = /\.(png|jpg|gif|jpeg)$/i
-  if (href === text && reg.test(href)) {
+
+  if (href === text && IMG_REGEXP.test(href)) {
     out += ' class="js-link-image"'
   }
   out += '>' + text + '</a>'

@@ -58,7 +58,9 @@ Comment.pre('save', function (next) {
 
 // здесь id - это id родителя
 Comment.static('updateRepliesCount', function (id) {
+  // у рутовых комментов нет настоящего родителя
   if (ROOT_PARENT_ID === id) return
+
   var model = this
   model
     .where({ parentId: id })
@@ -66,9 +68,7 @@ Comment.static('updateRepliesCount', function (id) {
       if (err) return
       model
         .findOneAndUpdate({_id: id}, {repliesCount: count})
-        .exec((error, result) => {
-          if (error) console.log(error)
-        })
+        .exec()
     })
 })
 

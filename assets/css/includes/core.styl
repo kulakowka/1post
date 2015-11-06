@@ -1,0 +1,47 @@
+* 
+  -moz-osx-font-smoothing grayscale
+  -webkit-font-smoothing antialiased
+  text-rendering optimizeLegibility
+
+body
+  margin 0
+  padding 0
+  font-family defaultFont
+  background ghostwhite
+  
+html
+  box-sizing border-box
+
+img 
+  max-width 100%
+
+*, 
+*:before, 
+*:after
+  box-sizing inherit
+
+input,
+textarea,
+button
+  -webkit-appearance none
+  -moz-appearance none
+  appearance none
+  border-radius 0
+  font-family defaultFont
+  
+.hidden
+  display none
+  
+a
+  color blueColor
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+table
+  border-collapse collapse 
+  tr
+    td,
+    th
+      padding 10px
+      border 1px solid greyColor    

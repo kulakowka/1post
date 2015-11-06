@@ -1,0 +1,32 @@
+.siteHeader
+  background-color blueColor
+  margin 0 -10px 20px
+  overflow hidden
+  @media all and (min-width: 800px)
+    margin 0 -20px 20px
+  .logo
+    a
+      font-size 20px
+      line-height 40px
+      display inline-block
+      padding 0 10px
+      color white
+    a:hover
+      text-decoration none
+  ul.rightMenu
+    float right
+    margin 0
+    padding 0
+    li + li
+      @media all and (min-width: 800px)
+        margin-left 20px
+    li
+      margin 0
+      padding 0
+      display inline-block
+      a
+        display inline-block
+        line-height 40px
+        font-size 13px
+        padding 0 10px
+        color white
