@@ -3,7 +3,12 @@
 var bcrypt = require('bcrypt')
 var mongoose = require('../config/db')
 var Comment = require('./comment')
+var createdAt = require('./plugins/createdAt')
+var updatedAt = require('./plugins/updatedAt')
+var deletedAt = require('./plugins/deletedAt')
+
 var Schema = mongoose.Schema
+
 var User = Schema({
   username: {
     type: String,
@@ -31,32 +36,24 @@ var User = Schema({
   }
 })
 
-var createdAt = require('./plugins/createdAt')
-var updatedAt = require('./plugins/updatedAt')
-var deletedAt = require('./plugins/deletedAt')
-
 User.plugin(createdAt, { index: true })
 User.plugin(updatedAt)
 User.plugin(deletedAt)
 
-User.methods.comparePassword = function (candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) return callback(err)
-    callback(null, isMatch)
-  })
+// user.comparePassword(password, (err, isMath) => {})
+User.methods.comparePassword = function comparePassword (candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password, callback)
 }
 
-// здесь id - это id родителя
-User.static('updateCommentsCount', function (id) {
+// User.updateCommentsCount(user._id, cb)
+User.static('updateCommentsCount', function updateCommentsCount (id, next) {
   var model = this
   Comment
-    .where({ creator: id })
-    .count((err, count) => {
-      if (err) return
-      model
-        .findOneAndUpdate({_id: id}, {commentsCount: count})
-        .exec()
-    })
+  .where({creator: id})
+  .count((err, count) => {
+    if (err) return next(err)
+    model.findOneAndUpdate({_id: id}, {commentsCount: count}).exec(next)
+  })
 })
 
 User.pre('save', function (next) {
@@ -66,8 +63,10 @@ User.pre('save', function (next) {
 
   bcrypt.genSalt((err, salt) => {
     if (err) return next(err)
+
     bcrypt.hash(user.password, salt, (err, hash) => {
       if (err) return next(err)
+
       user.password = hash
       next()
     })
@@ -75,3 +74,4 @@ User.pre('save', function (next) {
 })
 
 module.exports = mongoose.model('User', User)
+

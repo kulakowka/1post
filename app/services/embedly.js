@@ -1,7 +1,9 @@
 var request = require('superagent')
+var marked = require('./marked')
 
 const API_ENDPOINT_URL = 'http://api.embed.ly/1/oembed'
 const API_KEY = process.env.EMBEDLY_API_KEY || '784e6e620d3147b38ac196733a94f663'
+const REGEXP = /^\s*(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?\s*$/i
 
 function getPageData (url, callback) {
   request
@@ -17,8 +19,6 @@ function getPageData (url, callback) {
     })
 }
 
-const REGEXP = /^\s*(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?\s*$/i
-
 function getUrl (text) {
   return REGEXP.test(text) && text.replace(/\s+/g, '')
 }
@@ -26,14 +26,7 @@ function getUrl (text) {
 function cdnImage (url, width) {
   return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + url + '&container=focus&refresh=2592000&resize_w=' + width
 }
-// data.title
-// data.description
-// data.url
-// data.thumbnail_url
-// data.author_name
-// data.author_url
-// data.provider_name
-// data.type === 'link'
+
 function templateLink (data) {
   var html = '<div class="embeded-link">'
   if (data.thumbnail_url) html += '<a href="' + data.url + '" rel="nofollow" target="_blank"><img src="' + cdnImage(data.thumbnail_url, 100) + '" alt="' + data.title + '"/></a><div class="embed-link-content">'
@@ -51,4 +44,11 @@ function getLinkHtml (url, callback) {
     callback(null, templateLink(data))
   })
 }
-module.exports = {getLinkHtml, getUrl}
+
+module.exports = function embedly (html, next) {
+  var url = getUrl(html)
+  if (!url) return next(null, marked(html))
+  getLinkHtml(url, next)
+}
+
+

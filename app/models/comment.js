@@ -4,7 +4,6 @@ const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
 var truncate = require('truncate')
 var cheerio = require('cheerio')
-var marked = require('../services/marked')
 var embedly = require('../services/embedly')
 var mongoose = require('../config/db')
 var Schema = mongoose.Schema
@@ -62,40 +61,27 @@ Comment.plugin(createdAt, { index: true })
 Comment.plugin(updatedAt)
 Comment.plugin(deletedAt)
 
-// Need refactoring !!!
 Comment.pre('save', function (next) {
   var comment = this
   if (!comment.isModified('textSource')) return next()
 
-  var url = embedly.getUrl(comment.textSource)
-  if (url) {
-    embedly.getLinkHtml(comment.textSource, (err, html) => {
-      if (err) comment.textHtml = marked(comment.textSource)
-      else comment.textHtml = html
-      Object.assign(comment, getMetaTagsFromText(comment.textHtml))
-      next()
-    })
-  } else {
-    comment.textHtml = marked(comment.textSource)
-    Object.assign(comment, getMetaTagsFromText(comment.textHtml))
+  embedly(comment.textSource, (err, html) => {
+    if (err) return next(err)
+    Object.assign(comment, getMetaTagsFromText(html))
     next()
-  }
+  })
 })
 
-// здесь id - это id родителя
-Comment.static('updateRepliesCount', function (id) {
-  // у рутовых комментов нет настоящего родителя
+// Comment.updateRepliesCount(comment._id, cb)
+Comment.static('updateRepliesCount', function updateRepliesCount (id, next) {
   if (ROOT_PARENT_ID === id) return
-
   var model = this
   model
-    .where({ parentId: id })
-    .count((err, count) => {
-      if (err) return
-      model
-        .findOneAndUpdate({_id: id}, {repliesCount: count})
-        .exec()
-    })
+  .where({parentId: id})
+  .count((err, count) => {
+    if (err) return next(err)
+    model.findOneAndUpdate({_id: id}, {repliesCount: count}).exec(next)
+  })
 })
 
 var CommentModel = mongoose.model('Comment', Comment)
@@ -106,7 +92,9 @@ function getMetaTagsFromText (html) {
   var $ = cheerio.load(html)
   var title = $('h1, h2, h3, h4, h5, p').first().text()
   var description = $('h1, h2, h3, h4, h5, p').eq(1).text()
+
   return {
+    textHtml: html,
     metaTitle: truncate(title, 150),
     metaDescription: truncate(description, 160)
   }
