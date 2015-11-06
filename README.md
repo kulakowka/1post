@@ -12,6 +12,13 @@
 
 `PORT=3000 NODE_ENV=production forever start ./bin/www --harmony`
 
+### Env vars:
+
+- `PORT=3000`
+- `NODE_ENV=production` 
+- 'MONGO_URL=mongodb://localhost/express_app_v7'
+- `ADMIN_USERNAME=kulakowka`
+
 ### Ideas:
 
 https://github.com/HenrikJoreteg/templatizer
