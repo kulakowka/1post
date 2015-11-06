@@ -12,6 +12,6 @@ function compile (str, path) {
 
 module.exports = stylus.middleware({
   src: path.resolve(__dirname, '../assets'),
-  dest: path.resolve(__dirname, '../public'),
+  dest: path.resolve(__dirname, '../../public'),
   compile: compile
 })
