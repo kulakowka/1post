@@ -1,4 +1,7 @@
 var User = require('../models/user')
+var Comment = require('../models/comment')
+const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
+
 
 module.exports.index = (req, res, next) => {
   User
@@ -19,7 +22,26 @@ module.exports.show = (req, res, next) => {
     .exec((err, user) => {
       if (err) return next(err)
       if (!user) return res.status(404).render('error', {error: 'User not found'})
-      res.render('users/show', {user})
+      Comment
+        .find({creator: user._id})
+        .populate({
+          path: 'creator',
+          select: 'username'
+        })
+        .limit(20)
+        .sort({ createdAt: -1 })
+        .select('-textSource')
+        .exec((err, comments) => {
+          if (err) return next(err)
+          res.render('users/show', {
+            user,
+            comments,
+            title: user.username,
+            description: 'Comments by ' + user.username,
+            parentId: ROOT_PARENT_ID,
+            ROOT_PARENT_ID: ROOT_PARENT_ID
+          })
+        })
     })
 }
 

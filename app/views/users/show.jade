@@ -7,5 +7,9 @@ block content
   if user.isDeleted
     h1 User deleted
   else
-    h1= user.username
+    h1
+      = "Comments by "
+      = user.username
   
+    each comment in comments
+      include ../comments/includes/comment.jade
