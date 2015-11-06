@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
+var sitemap = require('../controllers/sitemap')
 var users = require('../controllers/users')
 var comments = require('../controllers/comments')
 var currentUser = require('../middlewares/currentUser')
@@ -20,6 +21,8 @@ router.get('/comments/:id/replies', comments.replies)
 router.use('/api', require('./api'))
 router.use('/admin', require('./admin'))
 
+// admin/sitemap
+router.get('/sitemap.xml', sitemap.index)
 router.get('/settings', ifUser, users.settings)
 router.get('/login', ifGuest, users.login)
 router.get('/register', ifGuest, users.register)
