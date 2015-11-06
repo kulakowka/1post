@@ -1,6 +1,7 @@
 const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
 var Comment = require('../models/comment')
+var User = require('../models/user')
 
 module.exports.index = (req, res, next) => {
   Comment
@@ -104,5 +105,7 @@ module.exports.create = (req, res, next) => {
     res.redirect('/comments/' + comment._id + '/reply')
     // обновим кол-во комментов у родителя
     Comment.updateRepliesCount(comment.parentId)
+    // обновим кол-во комментов у пользователя
+    User.updateCommentsCount(comment.creator)
   })
 }

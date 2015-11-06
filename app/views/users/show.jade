@@ -7,9 +7,14 @@ block content
   if user.isDeleted
     h1 User deleted
   else
-    h1
-      = "Comments by "
-      = user.username
-  
+    h1= user.username
+    
+      
+    unless comments.length
+      h3 No comments
+    else 
+      h3
+        = "Total comments: "
+        = user.commentsCount
     each comment in comments
       include ../comments/includes/comment.jade

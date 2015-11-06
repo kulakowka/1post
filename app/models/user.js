@@ -2,6 +2,7 @@
 
 var bcrypt = require('bcrypt')
 var mongoose = require('../config/db')
+var Comment = require('./comment')
 var Schema = mongoose.Schema
 var User = Schema({
   username: {
@@ -21,7 +22,13 @@ var User = Schema({
   comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'
-  }]
+  }],
+  commentsCount: {
+    type: Number,
+    required: true,
+    index: true,
+    default: 0
+  }
 })
 
 var createdAt = require('./plugins/createdAt')
@@ -38,6 +45,19 @@ User.methods.comparePassword = function (candidatePassword, callback) {
     callback(null, isMatch)
   })
 }
+
+// здесь id - это id родителя
+User.static('updateCommentsCount', function (id) {
+  var model = this
+  Comment
+    .where({ creator: id })
+    .count((err, count) => {
+      if (err) return
+      model
+        .findOneAndUpdate({_id: id}, {commentsCount: count})
+        .exec()
+    })
+})
 
 User.pre('save', function (next) {
   var user = this

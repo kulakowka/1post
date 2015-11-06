@@ -13,6 +13,7 @@ block content
       th updatedAt
       th deletedAt
       th isDeleted
+      th commentsCount
     each user in users
       tr
         td
@@ -21,3 +22,4 @@ block content
         td(title=user.updatedAt)= moment(user.updatedAt).toNow(true)
         td(title=user.deletedAt)= moment(user.deletedAt).toNow(true)
         td= user.isDeleted ? 'deleted' : ''
+        td= user.commentsCount
