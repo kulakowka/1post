@@ -4,7 +4,7 @@ const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
 var truncate = require('truncate')
 var cheerio = require('cheerio')
-var marked = require('../config/marked')
+var marked = require('../services/marked')
 var embedly = require('../services/embedly')
 var mongoose = require('../config/db')
 var Schema = mongoose.Schema

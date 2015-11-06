@@ -1,8 +1,7 @@
-// Using async version of marked
-// marked(markdownString, function (err, content) {
-//   if (err) throw err;
-//   console.log(content);
-// })
+/**
+ * @example
+ * var html = marked(text)
+ */
 
 var marked = require('marked')
 var highlightjs = require('highlight.js')
