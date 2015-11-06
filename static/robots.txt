@@ -8,5 +8,5 @@ Disallow: /comments/create
 Disallow: /comments/*/reply
 Disallow: /comments/*/replies
 
-Sitemap: https://1po.st/sitemap.xml
+Sitemap: http://1po.st/sitemap.xml
 Host: 1po.st
