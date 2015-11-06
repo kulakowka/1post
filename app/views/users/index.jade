@@ -17,13 +17,7 @@ block content
       tr
         td
           a(href="/" + user.username)= user.username
-        td
-          p= user.createdAt
-          p= moment(user.createdAt).toNow(true)
-        td
-          p= user.updatedAt
-          p= moment(user.updatedAt).toNow(true)
-        td
-          p= user.deletedAt
-          p= moment(user.deletedAt).toNow(true)
+        td(title=user.createdAt)= moment(user.createdAt).toNow(true)
+        td(title=user.updatedAt)= moment(user.updatedAt).toNow(true)
+        td(title=user.deletedAt)= moment(user.deletedAt).toNow(true)
         td= user.isDeleted ? 'deleted' : ''

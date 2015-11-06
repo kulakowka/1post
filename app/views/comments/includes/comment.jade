@@ -5,10 +5,11 @@
       a.repliesCount.js-comment-replies(href="/comments/" + comment._id data-id=comment._id.toString())
         b= comment.repliesCount
         = " replies"
-
-    a.reply.js-comment-reply(href="#" data-id=comment._id.toString()) reply
+    
+    if currentUser
+      a.reply.js-comment-reply(href="#" data-id=comment._id.toString()) reply
       
-    a.creator(href="/" + comment.creator.username)
+    a.creator(class=(adminName === comment.creator.username ? "admin" : "") href="/" + comment.creator.username)
       = "@"
       = comment.creator.username
     a.createdAt(href="/comments/" + comment._id)= moment(comment.createdAt).toNow(true)

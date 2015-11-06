@@ -1,3 +1,4 @@
+/* global ga */
 var $ = require('jquery')
 var autosize = require('autosize')
 
@@ -26,6 +27,7 @@ function commentCreate () {
       $(form).remove()
     }
     executeImages()
+    ga('send', 'event', 'comment', 'create', '/comments/' + data._id)
   }, 'html')
 
   return false

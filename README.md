@@ -10,7 +10,7 @@
 
 ### Production:
 
-`NODE_ENV=production PORT=3000 MONGO_URL=mongodb://localhost/express_app_v7 node ./bin/www --es_staging`
+`PORT=3000 NODE_ENV=production forever start ./bin/www --harmony`
 
 ### Ideas:
 

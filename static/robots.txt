@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /api
 Disallow: /login
 Disallow: /register
+Disallow: /admin
 Disallow: /settings
 Disallow: /comments/create
 Disallow: /comments/*/reply

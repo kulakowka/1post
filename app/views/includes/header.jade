@@ -1,6 +1,9 @@
 header.siteHeader
   ul.rightMenu
     if currentUser
+      if currentUser.username === adminName
+        li
+          a(href="/admin/users") admin
       li
         a(href="/" + currentUser.username)= currentUser.username
       li
