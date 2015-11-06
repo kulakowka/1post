@@ -10,7 +10,7 @@ module.exports.index = (req, res, next) => {
       path: 'creator',
       select: 'username'
     })
-    .limit(20)
+    .limit(200)
     .sort({ createdAt: -1 })
     .select('-textSource')
     .exec((err, comments) => {

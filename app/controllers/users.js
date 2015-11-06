@@ -1,7 +1,7 @@
+var async = require('async')
 var User = require('../models/user')
 var Comment = require('../models/comment')
 const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
-
 
 module.exports.index = (req, res, next) => {
   User
@@ -16,21 +16,26 @@ module.exports.index = (req, res, next) => {
 }
 
 module.exports.show = (req, res, next) => {
-  User
-    .findOne({username: req.params.username})
-    .select('-password')
-    .exec((err, user) => {
-      if (err) return next(err)
-      if (!user) return res.status(404).render('error', {error: 'User not found'})
+  async.waterfall([
+    function (callback) {
+      console.log('load user')
+      User
+        .findOne({username: req.params.username}).select('-password')
+        .exec((err, user) => {
+          if (err) return next(err)
+          if (!user) return res.status(404).render('error', {error: 'User not found'})
+          console.log('cb')
+          callback(null, user)
+        })
+    },
+    function (user, callback) {
+      console.log('load comments')
       Comment
-        .find({creator: user._id})
+        .find({creator: user._id}).limit(200).sort({ createdAt: -1 }).select('-textSource')
         .populate({
           path: 'creator',
           select: 'username'
         })
-        .limit(20)
-        .sort({ createdAt: -1 })
-        .select('-textSource')
         .exec((err, comments) => {
           if (err) return next(err)
           res.render('users/show', {
@@ -41,8 +46,10 @@ module.exports.show = (req, res, next) => {
             parentId: ROOT_PARENT_ID,
             ROOT_PARENT_ID: ROOT_PARENT_ID
           })
+          callback()
         })
-    })
+    }
+  ])
 }
 
 module.exports.settings = (req, res, next) => {
