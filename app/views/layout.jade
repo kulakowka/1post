@@ -14,7 +14,7 @@ html
       if adminPage
         include ./includes/adminMenu.jade
       block content
-    script(src='/js/app.js' async defer)
+    
     script.
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -23,3 +23,4 @@ html
 
       ga('create', 'UA-6538950-20', 'auto');
       ga('send', 'pageview');
+    script(src='/js/app.js' async defer)

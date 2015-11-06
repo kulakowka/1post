@@ -95,7 +95,10 @@ function initTextareaAutosize () {
 function executeImages () {
   $('.js-link-image').each(function () {
     var img = $('<img>')
-    img.attr('src', $(this).attr('href'))
+    var href = $(this).attr('href')
+    var text = $(this).text()
+    if (href !== text) return
+    img.attr('src', href)
     $(this).html(img)
   })
 }
