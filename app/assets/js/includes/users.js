@@ -2,14 +2,11 @@
 
 var $ = require('jquery')
 
-$(document)
-  .on('click', '.js-button-logout', logout)
-  .on('submit', '.js-form-login', login)
-  .on('submit', '.js-form-register', register)
-  .on('submit', '.js-form-user-update', userUpdate)
-  .on('submit', '.js-form-user-destroy', userDestroy)
-
-// METHODS
+module.exports.logout = logout
+module.exports.login = login
+module.exports.register = register
+module.exports.userUpdate = userUpdate
+module.exports.userDestroy = userDestroy
 
 function logout () {
   $.post('/api/users/logout', function () {

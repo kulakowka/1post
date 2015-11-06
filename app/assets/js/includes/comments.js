@@ -2,13 +2,14 @@
 var $ = require('jquery')
 var autosize = require('autosize')
 
-$(document)
-  .on('submit', '.js-form-comment', commentCreate)
-  .on('click', '.js-comment-replies', onClickRepliesCount)
-  .on('click', '.js-comment-reply', onClickReply)
-  .on('ready', loadInitialComments)
-  .on('ready', initTextareaAutosize)
-  .on('ready', executeImages)
+module.exports.commentCreate = commentCreate
+module.exports.loadReplies = loadReplies
+module.exports.clearReplies = clearReplies
+module.exports.onClickRepliesCount = onClickRepliesCount
+module.exports.onClickReply = onClickReply
+module.exports.loadInitialComments = loadInitialComments
+module.exports.initTextareaAutosize = initTextareaAutosize
+module.exports.executeImages = executeImages
 
 function commentCreate () {
   var form = this
