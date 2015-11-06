@@ -3,7 +3,7 @@ var router = express.Router()
 
 var sitemap = require('../controllers/sitemap')
 var users = require('../controllers/users')
-var comments = require('../controllers/comments')
+
 var currentUser = require('../middlewares/currentUser')
 var templateHelpers = require('../middlewares/templateHelpers')
 var ifUser = require('../middlewares/ifUser')
@@ -12,12 +12,7 @@ var ifGuest = require('../middlewares/ifGuest')
 router.use(currentUser)
 router.use(templateHelpers)
 
-router.get('/', comments.index)
-router.post('/comments/create', comments.create)
-router.get('/comments/:id', comments.show)
-router.get('/comments/:id/reply', comments.reply)
-router.get('/comments/:id/replies', comments.replies)
-
+router.use('/', require('./comments'))
 router.use('/api', require('./api'))
 router.use('/admin', require('./admin'))
 
