@@ -18,8 +18,12 @@ block content
       tr
         td
           a(href="/" + user.username)= user.username
-        td(title=user.createdAt)= moment(user.createdAt).toNow(true)
-        td(title=user.updatedAt)= moment(user.updatedAt).toNow(true)
-        td(title=user.deletedAt)= moment(user.deletedAt).toNow(true)
+        td
+          small= moment(user.createdAt).format("DD.MM.YYYY HH:MM:SS")
+        td
+          small= moment(user.updatedAt).format("DD.MM.YYYY HH:MM:SS")
+        td
+          if user.deletedAt
+            small= moment(user.deletedAt).format("DD.MM.YYYY HH:MM:SS")
         td= user.isDeleted ? 'deleted' : ''
         td= user.commentsCount
