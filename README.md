@@ -23,3 +23,11 @@
 ### Ideas:
 
 https://github.com/HenrikJoreteg/templatizer
+
+### Roadmap
+
+- Show errors in forms
+- Sitemap.xml and RSS feed
+- User profile
+- Email notifications 
+- Social login 
