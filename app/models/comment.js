@@ -62,27 +62,22 @@ Comment.plugin(createdAt, { index: true })
 Comment.plugin(updatedAt)
 Comment.plugin(deletedAt)
 
+// Need refactoring !!!
 Comment.pre('save', function (next) {
-
   var comment = this
   if (!comment.isModified('textSource')) return next()
 
   var url = embedly.getUrl(comment.textSource)
   if (url) {
     embedly.getLinkHtml(comment.textSource, (err, html) => {
-
       if (err) comment.textHtml = marked(comment.textSource)
       else comment.textHtml = html
+      Object.assign(comment, getMetaTagsFromText(comment.textHtml))
       next()
     })
   } else {
     comment.textHtml = marked(comment.textSource)
-    var $ = cheerio.load(comment.textHtml)
-    var title = $('h1, h2, h3, h4, h5, p').first().text()
-    var description = $('h1, h2, h3, h4, h5, p').eq(1).text()
-    comment.metaTitle = truncate(title, 150)
-    comment.metaDescription = truncate(description, 160)
-    console.log(comment)
+    Object.assign(comment, getMetaTagsFromText(comment.textHtml))
     next()
   }
 })
@@ -106,3 +101,13 @@ Comment.static('updateRepliesCount', function (id) {
 var CommentModel = mongoose.model('Comment', Comment)
 
 module.exports = CommentModel
+
+function getMetaTagsFromText (html) {
+  var $ = cheerio.load(html)
+  var title = $('h1, h2, h3, h4, h5, p').first().text()
+  var description = $('h1, h2, h3, h4, h5, p').eq(1).text()
+  return {
+    metaTitle: truncate(title, 150),
+    metaDescription: truncate(description, 160)
+  }
+}
