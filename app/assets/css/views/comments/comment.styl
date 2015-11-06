@@ -3,7 +3,10 @@
 .commentItem + .commentItem
   margin-top 30px
 
-.commentItem
+article.commentItem
+  display block
+  margin 0
+  padding 0
   .textHtml
     font-size mediumFontSize
     line-height 1.6em
@@ -32,6 +35,21 @@
         position absolute
         left 0
         top 0
+    .embeded-link-title
+      a
+        display inline
+        vertical-align middle
+        margin-right 5px
+        &:hover
+          color blueColor
+      &:after
+        content ''
+        background: url('/images/new-tab.svg')
+        width 16px
+        height 16px
+        display inline-block
+        vertical-align middle
+        
       
   .meta
     font-size smallFontSize - 1
