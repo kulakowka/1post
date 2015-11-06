@@ -2,6 +2,16 @@ extends ../layout.jade
 
 block head
   title= title
+  meta(content=description name='description')
+  meta(property="og:type" content="article")
+  meta(property="og:url" content="http://1po.st/comments/" + comment._id)
+  meta(property="og:title" content=title)
+  meta(property="og:description" content=description)
+  meta(property="og:article:published_time" content=comment.createdAt.toISOString())
+  meta(property="og:article:modified_time" content=comment.updatedAt.toISOString())
+  meta(property="og:article:author" content=comment.creator.username)
+  //- meta(property="og:article:section" content="Technology")
+  //- meta(property="og:article:tag" content="web internet")  
 
 block content
   #commentsShow

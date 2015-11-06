@@ -2,12 +2,26 @@
 
 const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
+var truncate = require('truncate')
+var cheerio = require('cheerio')
 var marked = require('../config/marked')
 var embedly = require('../services/embedly')
 var mongoose = require('../config/db')
 var Schema = mongoose.Schema
 
 var Comment = Schema({
+  metaTitle: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 200
+  },
+  metaDescription: {
+    type: String,
+    trim: true,
+    minlength: 1,
+    maxlength: 200
+  },
   textSource: {
     type: String,
     trim: true,
@@ -63,6 +77,12 @@ Comment.pre('save', function (next) {
     })
   } else {
     comment.textHtml = marked(comment.textSource)
+    var $ = cheerio.load(comment.textHtml)
+    var title = $('h1, h2, h3, h4, h5, p').first().text()
+    var description = $('h1, h2, h3, h4, h5, p').eq(1).text()
+    comment.metaTitle = truncate(title, 150)
+    comment.metaDescription = truncate(description, 160)
+    console.log(comment)
     next()
   }
 })

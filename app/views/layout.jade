@@ -2,10 +2,15 @@ doctype html
 html
   head
     link(rel='stylesheet' href='/css/app.css')
-    
-
     block head
-      title= pageTitle
+      title= title
+      meta(content=description name='description')
+      meta(property="og:type" content="website")
+      meta(property="og:url" content="http://1po.st")
+      meta(property="og:title" content=title)
+      meta(property="og:description" content=description)
+      meta(property="og:image" content="http://1po.st/images/logo.png")
+
     meta(content='width=device-width,initial-scale=1,user-scalable=no' name='viewport')
     
   body

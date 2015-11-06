@@ -16,7 +16,8 @@ module.exports.index = (req, res, next) => {
       if (err) return next(err)
       res.render('comments/index', {
         comments,
-        title: 'Comments root',
+        title: '1 Po.st',
+        description: 'Internet community',
         parentId: ROOT_PARENT_ID,
         ROOT_PARENT_ID: ROOT_PARENT_ID
       })
@@ -42,6 +43,7 @@ module.exports.replies = (req, res, next) => {
       res.render('comments/replies', {
         comments,
         title: 'Comments root',
+
         parentId: req.params.id,
         ROOT_PARENT_ID: ROOT_PARENT_ID
       })
@@ -62,7 +64,8 @@ module.exports.show = (req, res, next) => {
       if (!comment) return res.status(404).render('error', {error: 'Comment not found'})
       res.render('comments/show', {
         comment,
-        title: 'Comments show',
+        title: comment.metaTitle,
+        description: comment.metaDescription,
         parentId: comment._id,
         ROOT_PARENT_ID: ROOT_PARENT_ID
       })
