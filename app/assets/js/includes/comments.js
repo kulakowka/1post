@@ -18,15 +18,18 @@ function commentCreate () {
   var data = $(form).serialize()
   var replies = $('#comment_' + id).find('> .replies')
 
+  if (isRoot) {
+    form.reset()
+  } else {
+    $(form).remove()
+  }
   $.post('/comments/create', data, function (html) {
     if (isRoot) {
       replies.prepend(html)
-      form.reset()
-      autosize.update($(form).find('textarea'))
     } else {
       replies.append(html)
-      $(form).remove()
     }
+    autosize.update($(form).find('textarea'))
     executeImages()
     ga('send', 'event', 'comment', 'create', '/comments/' + data._id)
   }, 'html')

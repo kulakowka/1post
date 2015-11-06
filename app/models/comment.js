@@ -3,6 +3,7 @@
 const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
 var marked = require('../config/marked')
+var embedly = require('../services/embedly')
 var mongoose = require('../config/db')
 var Schema = mongoose.Schema
 
@@ -48,12 +49,22 @@ Comment.plugin(updatedAt)
 Comment.plugin(deletedAt)
 
 Comment.pre('save', function (next) {
-  var comment = this
 
+  var comment = this
   if (!comment.isModified('textSource')) return next()
 
-  comment.textHtml = marked(comment.textSource)
-  next()
+  var url = embedly.getUrl(comment.textSource)
+  if (url) {
+    embedly.getLinkHtml(comment.textSource, (err, html) => {
+
+      if (err) comment.textHtml = marked(comment.textSource)
+      else comment.textHtml = html
+      next()
+    })
+  } else {
+    comment.textHtml = marked(comment.textSource)
+    next()
+  }
 })
 
 // здесь id - это id родителя

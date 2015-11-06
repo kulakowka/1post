@@ -18,6 +18,7 @@
 - `NODE_ENV=production` 
 - `MONGO_URL=mongodb://localhost/express_app_v7`
 - `ADMIN_USERNAME=kulakowka`
+- `API_KEY=784e6e620d3147b38ac196733a94f461`
 
 ### Ideas:
 
