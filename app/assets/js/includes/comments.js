@@ -31,7 +31,7 @@ function commentCreate () {
     }
     autosize.update($(form).find('textarea'))
     executeImages()
-    ga('send', 'event', 'comment', 'create', '/comments/' + data._id)
+    ga('send', 'event', 'comment', 'create', isRoot ? 'root' : id)
   }, 'html')
 
   return false
