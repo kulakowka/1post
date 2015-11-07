@@ -6,6 +6,11 @@ var ifAdmin = require('../../middlewares/ifAdmin')
 
 router.use(ifUser, ifAdmin)
 
+router.use((req, res, next) => {
+  res.locals.adminPage = true
+  next()
+})
+
 // admin/comments
 router.use('/comments', require('./comments'))
 
