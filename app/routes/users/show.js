@@ -5,7 +5,7 @@ var Comment = require('../../models/comment')
 const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
 
 // /:username
-router.get('/:username', 
+router.get('/:username',
   (req, res, next) => {
     User
     .findOne({username: req.params.username})
@@ -48,7 +48,7 @@ router.get('/:username',
   },
   (req, res, next) => {
     var user = res.locals.user
-    
+
     res.render('users/show', {
       title: user.username,
       description: 'Comments by ' + user.username,

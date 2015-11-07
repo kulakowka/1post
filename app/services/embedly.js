@@ -50,5 +50,3 @@ module.exports = function embedly (html, next) {
   if (!url) return next(null, marked(html))
   getLinkHtml(url, next)
 }
-
-

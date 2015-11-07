@@ -4,7 +4,7 @@ var router = express.Router()
 var User = require('../../models/user')
 
 // admin/users
-router.get('/', 
+router.get('/',
   (req, res, next) => {
     User
     .find()
@@ -15,7 +15,7 @@ router.get('/',
     .catch(next)
     .then(users => {
       res.render('users/index', {
-        users, 
+        users,
         title: 'Users list'
       })
     })

@@ -6,7 +6,7 @@ var router = express.Router()
 var Comment = require('../../models/comment')
 
 // admin/comments
-router.get('/', 
+router.get('/',
   (req, res, next) => {
     Comment
     .find({})
@@ -31,4 +31,3 @@ router.get('/',
 )
 
 module.exports = router
-

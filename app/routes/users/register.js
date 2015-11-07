@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 // /register
-router.get('/', 
+router.get('/',
   (req, res, next) => {
     res.render('users/register')
   }

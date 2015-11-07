@@ -7,7 +7,7 @@ var passport = require('../../config/passport')
 var ifUser = require('../middlewares/ifUser')
 var ifGuest = require('../middlewares/ifGuest')
 
-router.get('/', 
+router.get('/',
   (req, res, next) => {
     User
     .find()
@@ -21,7 +21,7 @@ router.get('/',
   }
 )
 
-router.get('/:username', 
+router.get('/:username',
   (req, res, next) => {
     User
     .findOne({username: req.params.username})
@@ -34,8 +34,8 @@ router.get('/:username',
   }
 )
 
-router.post('/login', 
-  ifGuest, 
+router.post('/login',
+  ifGuest,
   (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err) }
@@ -48,8 +48,7 @@ router.post('/login',
   }
 )
 
-
-router.post('/register', ifGuest, 
+router.post('/register', ifGuest,
   (req, res, next) => {
     User
     .findOne({username: req.body.username})
@@ -70,15 +69,16 @@ router.post('/register', ifGuest,
   }
 )
 
-router.post('/logout', 
-  ifUser, 
+router.post('/logout',
+  ifUser,
   (req, res, next) => {
     req.logout()
     res.json({message: 'Session destroyed'})
   }
 )
-router.post('/update', 
-  ifUser, 
+
+router.post('/update',
+  ifUser,
   (req, res, next) => {
     var user = req.user
 
@@ -97,8 +97,8 @@ router.post('/update',
   }
 
 )
-router.post('/destroy', 
-  ifUser, 
+router.post('/destroy',
+  ifUser,
   (req, res, next) => {
     var user = req.user
 

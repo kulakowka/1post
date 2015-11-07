@@ -3,12 +3,11 @@ const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
 var Comment = require('../../models/comment')
 var User = require('../../models/user')
 
-
 var express = require('express')
 var router = express.Router()
 
-// Mainpage 
-router.get('/', 
+// Mainpage
+router.get('/',
 
   // load latest comments
   (req, res, next) => {
@@ -41,7 +40,7 @@ router.get('/',
 )
 
 // Create comment
-router.post('/comments/create', 
+router.post('/comments/create',
 
   // save comment to db
   (req, res, next) => {
@@ -71,7 +70,7 @@ router.post('/comments/create',
 )
 
 // Show comment
-router.get('/comments/:id', 
+router.get('/comments/:id',
 
   // load comment
   (req, res, next) => {
@@ -121,7 +120,7 @@ router.get('/comments/:id',
 )
 
 // GET /comments/:id/replies
-router.get('/comments/:id/replies', 
+router.get('/comments/:id/replies',
   (req, res, next) => {
     var sort = ROOT_PARENT_ID.equals(req.params.id) ? -1 : 1
 
