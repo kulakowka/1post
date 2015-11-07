@@ -1,20 +1,24 @@
 var sm = require('sitemap')
 var Comment = require('../models/comment')
 
-function generateSiteMap (callback) {
+function generateSiteMap (resolve, reject) {
   Comment
     .find()
     .populate({
       path: 'creator',
       select: 'username'
     })
-    .limit(5000)
-    .sort({ createdAt: -1 })
+    .limit(1000)
+    .sort({createdAt: -1})
     .select('-textSource')
-    .exec((err, comments) => {
-      if (err) return callback(err)
+    .exec()
+    .catch(reject)
+    .then(comments => {
       var sitemap = createSiteMap(comments)
-      sitemap.toXML(callback)
+      sitemap.toXML(function (err, xml) {
+        if (err) return reject(err)
+        resolve(xml)
+      })
     })
 }
 
@@ -36,4 +40,6 @@ function createSiteMap (comments) {
   return sitemap
 }
 
-module.exports = {generateSiteMap}
+module.exports = function SitemapService () {
+  return new Promise(generateSiteMap)
+}
