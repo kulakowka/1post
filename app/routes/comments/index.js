@@ -40,7 +40,7 @@ router.get('/',
 )
 
 // Create comment
-router.post('/comments/create',
+router.post('/c/create',
 
   // save comment to db
   (req, res, next) => {
@@ -60,7 +60,7 @@ router.post('/comments/create',
   // redirect to comment show without layout
   (req, res, next) => {
     var comment = res.locals.comment
-    res.redirect('/comments/' + comment._id)
+    res.redirect('/c/' + comment._id)
 
     // TODO: надо убрать будет отсюда наверное в модели?
     Comment.updateRepliesCount(comment.parentId)
@@ -70,7 +70,7 @@ router.post('/comments/create',
 )
 
 // Show comment
-router.get('/comments/:id',
+router.get('/c/:id',
 
   // load comment
   (req, res, next) => {
@@ -120,7 +120,7 @@ router.get('/comments/:id',
 )
 
 // GET /comments/:id/replies
-router.get('/comments/:id/replies',
+router.get('/c/:id/replies',
   (req, res, next) => {
     var sort = ROOT_PARENT_ID.equals(req.params.id) ? -1 : 1
 

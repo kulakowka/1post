@@ -23,7 +23,7 @@ function commentCreate () {
   } else {
     $(form).remove()
   }
-  $.post('/comments/create', data, function (html) {
+  $.post('/c/create', data, function (html) {
     if (isRoot) {
       replies.prepend(html)
     } else {
@@ -41,7 +41,7 @@ function loadReplies (id) {
   var comment = $('#comment_' + id)
   var replies = comment.find('> .replies')
 
-  $.get('/comments/' + id + '/replies', function (html) {
+  $.get('/c/' + id + '/replies', function (html) {
     replies.html(html)
     autosize(comment.find('.commentForm textarea'))
     executeImages()
