@@ -1,5 +1,5 @@
 var request = require('superagent')
-var marked = require('./marked')
+var MarkedService = require('./marked')
 
 const API_ENDPOINT_URL = 'http://api.embed.ly/1/oembed'
 const API_KEY = process.env.EMBEDLY_API_KEY || '784e6e620d3147b38ac196733a94f663'
@@ -38,15 +38,19 @@ function templateLink (data) {
   return html
 }
 
-function getLinkHtml (url, callback) {
-  getPageData(url, (err, data) => {
-    if (err) return callback(err)
-    callback(null, templateLink(data))
-  })
-}
+module.exports = function EmbedlyService (text) {
+  var url = getUrl(text)
 
-module.exports = function embedly (html, next) {
-  var url = getUrl(html)
-  if (!url) return next(null, marked(html))
-  getLinkHtml(url, next)
+  if (url) {
+    return new Promise((resolve, reject) => {
+      getPageData(url, (err, data) => {
+        if (err) return reject(err)
+        resolve(templateLink(data))
+      })
+    })
+  }else{
+    return new Promise((resolve, reject) => {
+      MarkedService(html).then(resolve).catch(reject)
+    })
+  }  
 }
