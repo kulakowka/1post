@@ -1,3 +1,11 @@
+/**
+ * @example
+ * EmbedlyService(text)
+ * .catch(error => cb(error))
+ * .then(html => cb(null, html))
+ *
+ */
+
 var request = require('superagent')
 var MarkedService = require('./marked')
 
@@ -48,9 +56,9 @@ module.exports = function EmbedlyService (text) {
         resolve(templateLink(data))
       })
     })
-  }else{
+  } else {
     return new Promise((resolve, reject) => {
       MarkedService(text).then(resolve).catch(reject)
     })
-  }  
+  }
 }

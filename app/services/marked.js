@@ -1,6 +1,9 @@
 /**
  * @example
- * var html = marked(text)
+ * MarkedService(text)
+ * .catch(error => cb(error))
+ * .then(html => cb(null, html))
+ *
  */
 
 var marked = require('marked')

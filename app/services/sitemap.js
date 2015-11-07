@@ -1,3 +1,11 @@
+/**
+ * @example
+ * SitemapService()
+ * .catch(error => cb(error))
+ * .then(xml => cb(null, xml))
+ *
+ */
+
 var sm = require('sitemap')
 var Comment = require('../models/comment')
 
