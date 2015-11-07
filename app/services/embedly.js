@@ -29,7 +29,7 @@ function cdnImage (url, width) {
 
 function templateLink (data) {
   var html = '<div class="embeded-link">'
-  if (data.thumbnail_url) html += '<a href="' + data.url + '" rel="nofollow" target="_blank"><img src="' + cdnImage(data.thumbnail_url, 100) + '" alt="' + data.title + '"/></a><div class="embed-link-content">'
+  if (data.thumbnail_url) html += '<a href="' + data.url + '" rel="nofollow" target="_blank" class="embeded-link-image"><img src="' + cdnImage(data.thumbnail_url, 100) + '" alt="' + data.title + '"/></a><div class="embed-link-content">'
   if (data.title) html += '<h2 class="embeded-link-title"><a href="' + data.url + '" rel="nofollow" target="_blank">' + data.title + '</a></h2>'
   else html += '<h2 class="embeded-link-title"><a href="' + data.url + '" rel="nofollow" target="_blank">' + data.url + '</a></h2>'
   if (data.description) html += '<p class="embeded-link-description">' + data.description + '</p>'
