@@ -53,5 +53,7 @@ marked.setOptions({
 module.exports = marked
 
 module.exports = function MarkedService (text) {
-  return new Promise().resolve(marked(text))
+  return new Promise((resolve, reject) => {
+    resolve(marked(text))
+  })
 }

@@ -50,7 +50,7 @@ module.exports = function EmbedlyService (text) {
     })
   }else{
     return new Promise((resolve, reject) => {
-      MarkedService(html).then(resolve).catch(reject)
+      MarkedService(text).then(resolve).catch(reject)
     })
   }  
 }
