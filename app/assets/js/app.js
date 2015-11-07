@@ -6,6 +6,7 @@ attachFastClick(document.body)
 var comments = require('./includes/comments')
 var users = require('./includes/users')
 
+
 $(document)
 
   // comments
@@ -22,3 +23,5 @@ $(document)
   .on('submit', '.js-form-register', users.register)
   .on('submit', '.js-form-user-update', users.userUpdate)
   .on('submit', '.js-form-user-destroy', users.userDestroy)
+
+
