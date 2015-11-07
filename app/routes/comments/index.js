@@ -123,7 +123,7 @@ router.get('/comments/:id',
 // GET /comments/:id/replies
 router.get('/comments/:id/replies', 
   (req, res, next) => {
-    var sort = ROOT_PARENT_ID.equals(parentId) ? -1 : 1
+    var sort = ROOT_PARENT_ID.equals(req.params.id) ? -1 : 1
 
     Comment
       .find({parentId: req.params.id})

@@ -6,7 +6,7 @@ module.exports.index = (req, res, next) => {
     .find()
     .limit(20)
     .sort({ _id: -1 })
-    .select('-password')
+    .select('-password -comments')
     .exec((err, users) => {
       if (err) return next(err)
       res.json({users})
