@@ -26,8 +26,9 @@ https://github.com/HenrikJoreteg/templatizer
 
 ### Roadmap
 
-- Show errors in forms
-- Sitemap.xml and RSS feed
-- User profile
-- Email notifications 
-- Social login 
+- [ ] Show errors in forms
+- [X] Sitemap.xml 
+- [ ] RSS feed
+- [X] User profile
+- [X] Email send
+- [ ] Social login 
