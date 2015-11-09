@@ -8,7 +8,6 @@
   },
   "scripts": {
     "start": "node ./bin/www --es_staging",
-    "rsync": "rsync -av --delete ./ onepost@geekhub.vhost.firehub.net:sites/onepost/ --exclude=\"node_modules\" ",
     "test": "standard"
   },
   "pre-commit": [
