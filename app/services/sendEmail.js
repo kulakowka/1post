@@ -10,7 +10,7 @@ function SendEmail (data) {
   // отправить задание в очередь
   var job = queue
   .create('email', data)
-  .removeOnComplete(true)
+  // .removeOnComplete(true)
   .save(err => {
     if (err) console.log('job create error::: ', err)
   })

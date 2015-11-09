@@ -9,7 +9,10 @@ router.use((req, res, next) => {
 // admin/comments
 router.use('/comments', require('./comments'))
 
-// api/users
+// admin/users
 router.use('/users', require('./users'))
+
+// admin/kue
+router.use('/kue', require('./kue'))
 
 module.exports = router

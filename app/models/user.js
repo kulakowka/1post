@@ -95,7 +95,8 @@ User.pre('save', function (next) {
   next()
 
   SendEmail({
-    user: user, 
+    title: 'Confirmation email',
+    user: user,
     template: 'confirm-email'
   })
 })
