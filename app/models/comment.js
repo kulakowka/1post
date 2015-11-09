@@ -89,6 +89,8 @@ var CommentModel = mongoose.model('Comment', Comment)
 
 module.exports = CommentModel
 
+
+// TODO: Надо вынести в сервисы
 function getMetaTagsFromText (html) {
   var $ = cheerio.load(html)
   var title = $('h1, h2, h3, h4, h5, p').first().text()
