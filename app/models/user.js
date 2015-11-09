@@ -20,6 +20,15 @@ var User = Schema({
     lowercase: true,
     unique: true
   },
+  email: {
+    type: String,
+    index: true,
+    trim: true,
+    minlength: 3,
+    maxlength: 20,
+    lowercase: true,
+    unique: true
+  },
   password: {
     type: String,
     required: true

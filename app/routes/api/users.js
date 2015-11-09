@@ -87,6 +87,7 @@ router.post('/update',
       if (!isValid) return res.status(400).json({error: 'Current password is incorrect'})
 
       user.username = req.body.username
+      user.email = req.body.email
       if (req.body.newPassword) user.password = req.body.newPassword
 
       user.save((err, user) => {
