@@ -10,6 +10,7 @@ var templateHelpers = require('./middlewares/templateHelpers')
 router.use(templateHelpers)
 
 router.use('/', require('./comments'))
+router.use('/kue', ifAdmin, require('./kue'))
 router.use('/api', ifApiKey, require('./api'))
 router.use('/admin', ifUser, ifAdmin, require('./admin'))
 router.use('/sitemap.xml', require('./sitemap'))

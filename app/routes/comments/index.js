@@ -2,7 +2,6 @@ const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
 
 var Comment = require('../../models/comment')
 var User = require('../../models/user')
-var sendEmail = require('../../services/sendEmail')
 
 var express = require('express')
 var router = express.Router()
@@ -66,12 +65,6 @@ router.post('/c/create',
     // TODO: надо убрать будет отсюда наверное в модели?
     Comment.updateRepliesCount(comment.parentId)
     User.updateCommentsCount(comment.creator)
-
-    sendEmail({
-      user: req.user, 
-      template:'welcome-email'
-    })
-  
   }
 
 )

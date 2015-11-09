@@ -29,6 +29,9 @@ var User = Schema({
     lowercase: true,
     unique: true
   },
+  emailConfirmed: {
+    type: Boolean
+  },
   password: {
     type: String,
     required: true
@@ -79,6 +82,21 @@ User.pre('save', function (next) {
       user.password = hash
       next()
     })
+  })
+})
+
+var SendEmail = require('../services/sendEmail')
+User.pre('save', function (next) {
+  var user = this
+
+  if (!user.isModified('email')) return next()
+
+  user.emailConfirmed = false
+  next()
+
+  SendEmail({
+    user: user, 
+    template: 'confirm-email'
   })
 })
 

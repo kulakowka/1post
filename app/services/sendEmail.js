@@ -1,18 +1,18 @@
-var queue = require('../config/kue').emails_queue
+var queue = require('../config/kue').queue
 
 
 // var data = {
 //     user: req.user,
 //     template: 'welcome-email'
 //   }
-function sendEmail (data) {
+function SendEmail (data) {
 
   // отправить задание в очередь
-  queue
+  var job = queue
   .create('email', data)
   .removeOnComplete(true)
   .save(err => {
-    if (!err) console.log('job saved', job.id)
+    if (err) console.log('job create error::: ', err)
   })
 
   // job
@@ -22,4 +22,4 @@ function sendEmail (data) {
   // .on('progress', (progress, data) => console.log('\r  job #' + job.id + ' ' + progress + '% complete with data ', data ))
 }
 
-module.exports = sendEmail
+module.exports = SendEmail
