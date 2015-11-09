@@ -105,3 +105,7 @@ function executeImages () {
     $(this).html(img)
   })
 }
+
+function cdnImage (url, width) {
+  return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + url + '&container=focus&refresh=2592000&resize_w=' + width
+}
