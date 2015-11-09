@@ -25,6 +25,7 @@
     "connect-mongo": "^0.8.2",
     "cookie-parser": "^1.4.0",
     "debug": "~2.2.0",
+    "email-templates": "^2.0.1",
     "express": "~4.13.1",
     "express-session": "^1.12.1",
     "fastclick": "^1.0.6",

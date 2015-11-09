@@ -1,0 +1,14 @@
+//- Confirm email plese
+extends ../../layout
+
+block content
+  h1 Confirm email please
+  p
+    = "Hello "
+    = user.username
+    = "!"
+
+  p 
+    a.btn(href="/users/confirm?token="+token) Confirm email
+
+  

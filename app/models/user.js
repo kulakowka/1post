@@ -6,6 +6,7 @@ var Comment = require('./comment')
 var createdAt = require('./plugins/createdAt')
 var updatedAt = require('./plugins/updatedAt')
 var deletedAt = require('./plugins/deletedAt')
+var SendEmail = require('../services/emails/sendEmail')
 
 var Schema = mongoose.Schema
 
@@ -85,7 +86,6 @@ User.pre('save', function (next) {
   })
 })
 
-var SendEmail = require('../services/sendEmail')
 User.pre('save', function (next) {
   var user = this
 
@@ -97,7 +97,8 @@ User.pre('save', function (next) {
   SendEmail({
     title: 'Confirmation email',
     user: user,
-    template: 'confirm-email'
+    token: 'test token',
+    template: 'users/confirm-email'
   })
 })
 

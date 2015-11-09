@@ -1,5 +1,7 @@
 
 var kue = require('kue')
+var getTemplate = require('../services/emails/getTemplate')
+
 var mailgun = require('mailgun-js')({
   apiKey: 'key-2fea16609fb8a7434a05e84a4c480ac1',
   domain: 'sandboxa2fa6aec1054486ba188ee59ad0fcdbd.mailgun.org'
@@ -20,18 +22,20 @@ const maxActiveJobs = 20
 Queue.process('email', maxActiveJobs, sendEmail)
 
 function sendEmail (job, done) {
-  var user = job.data.user
-  var data = {
-    title: 'Confirmation email to ' + user.username,
-    from: '1Po.st <hello@1po.st>',
-    to: job.data.user.email,
-    subject: 'Confirm email please',
-    text: 'Testing some Mailgun awesomness!'
-  }
-
-  mailgun.messages().send(data, (err, body) => {
+  getTemplate(job.data, (err, result) => {
     if (err) return done(err)
-    done()
-    // console.log(body);
+
+    var data = {
+      from: '1Po.st <hello@1po.st>',
+      to: job.data.user.email,
+      subject: job.data.title,
+      html: result.html
+    }
+
+    mailgun.messages().send(data, (err, body) => {
+      if (err) return done(err)
+      done()
+      console.log('mail send success ', body)
+    })
   })
 }
