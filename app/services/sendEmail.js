@@ -1,25 +1,17 @@
-var queue = require('../config/kue').queue
+var Queue = require('../config/kue').Queue
 
-
-// var data = {
-//     user: req.user,
-//     template: 'welcome-email'
-//   }
+// data = {
+//  title: 'Welcome',
+//  to: 'kulakowka@gmail.com',
+//  template: 'welcome'
+// }
 function SendEmail (data) {
-
-  // отправить задание в очередь
-  var job = queue
+  Queue
   .create('email', data)
-  // .removeOnComplete(true)
-  .save(err => {
-    if (err) console.log('job create error::: ', err)
-  })
-
-  // job
-  // .on('complete', result => console.log('Job completed with data ', result))
-  // .on('failed attempt', (errorMessage, doneAttempts) => console.log('Job failed'))
-  // .on('failed', errorMessage => console.log('Job failed'))
-  // .on('progress', (progress, data) => console.log('\r  job #' + job.id + ' ' + progress + '% complete with data ', data ))
+  // .removeOnComplete(true)  // в продакшн режиме надо включить, но пока настраиваю лучше ничего не удалять
+  .delay(1000) // milliseconds
+  .priority('high')
+  .save()
 }
 
 module.exports = SendEmail

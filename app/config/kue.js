@@ -6,15 +6,18 @@ var mailgun = require('mailgun-js')({
 })
 
 // создадим очередь для отправки сообщений
-var queue = kue.createQueue()
+var Queue = kue.createQueue({
+  jobEvents: false  // отключим события на объектах job для лучшей производительности
+})
 
 // экспортнем ее для переиспользования в других модулях
-module.exports.queue = queue
+module.exports.Queue = Queue
 
 // пока обработку очередей можно прямо тут оставить в общем то.
 // но по хорошему, в будующем надо бы вынести это в отдельное приложение
 // В общем, организация структуры - это будет потом. Сначала надо сделать чтобы работало :)
-queue.process('email', sendEmail)
+const maxActiveJobs = 20
+Queue.process('email', maxActiveJobs, sendEmail)
 
 function sendEmail (job, done) {
   var user = job.data.user

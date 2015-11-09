@@ -6,6 +6,7 @@ const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
 
 // /:username
 router.get('/:username',
+
   (req, res, next) => {
     User
     .findOne({username: req.params.username})
