@@ -5,6 +5,7 @@ const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 var truncate = require('truncate')
 var cheerio = require('cheerio')
 var EmbedlyService = require('../services/embedly')
+var MarkedService = require('../services/marked')
 var mongoose = require('../config/db')
 var Schema = mongoose.Schema
 
@@ -65,9 +66,13 @@ Comment.pre('save', function (next) {
 
   EmbedlyService(comment.textSource)
   .catch(next)
-  .then(html => {
-    Object.assign(comment, getMetaTagsFromText(html))
-    next()
+  .then(text => {
+    MarkedService(text)
+    .catch(next)
+    .then(html => {
+      Object.assign(comment, getMetaTagsFromText(html))
+      next()  
+    })
   })
 })
 
