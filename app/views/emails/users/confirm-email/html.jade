@@ -2,13 +2,10 @@
 extends ../../layout
 
 block content
-  h1 Confirm email please
-  p
-    = "Hello "
-    = user.username
-    = "!"
+  p Hello #{user.username}!
 
+  p You can confirm your account email through the link below:
   p 
-    a.btn(href="/users/confirm?token="+token) Confirm email
+    a.btn(href='http://1po.st/confirm/'+token) Confirm my account
 
   

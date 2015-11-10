@@ -56,7 +56,6 @@ Comment.plugin(createdAt, { index: true })
 Comment.plugin(updatedAt)
 Comment.plugin(deletedAt)
 
-
 // Модификация текста комментария
 var EmbedlyService = require('../services/embedly')
 var MarkedService = require('../services/marked')
@@ -71,7 +70,7 @@ Comment.pre('save', function (next) {
   .then(MetaTagsService)
   .then(data => {
     Object.assign(comment, data)
-    next()  
+    next()
   })
   .catch(next)
 })
@@ -91,6 +90,3 @@ Comment.static('updateRepliesCount', function updateRepliesCount (id, next) {
 var CommentModel = mongoose.model('Comment', Comment)
 
 module.exports = CommentModel
-
-
-

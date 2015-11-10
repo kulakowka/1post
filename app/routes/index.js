@@ -16,6 +16,7 @@ router.use('/sitemap.xml', require('./sitemap'))
 router.use('/settings', ifUser, require('./users/settings'))
 router.use('/login', ifGuest, require('./users/login'))
 router.use('/register', ifGuest, require('./users/register'))
+router.use('/confirm', require('./users/confirm'))
 router.use('/', require('./users/show'))
 
 module.exports = router

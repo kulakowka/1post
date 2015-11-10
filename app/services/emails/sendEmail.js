@@ -5,13 +5,11 @@ var Queue = require('../../config/kue').Queue
 //  to: 'kulakowka@gmail.com',
 //  template: 'welcome'
 // }
-function sendEmail (data) {
+module.exports = function sendEmail (data) {
   Queue
   .create('email', data)
-  // .removeOnComplete(true)  // в продакшн режиме надо включить, но пока настраиваю лучше ничего не удалять
+  .removeOnComplete(true)
   .delay(1000) // milliseconds
   .priority('high')
   .save()
 }
-
-module.exports = sendEmail

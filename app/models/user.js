@@ -3,6 +3,7 @@
 var bcrypt = require('bcrypt')
 var mongoose = require('../config/db')
 var Comment = require('./comment')
+var VerificationToken = require('./verificationToken')
 var abilities = require('./plugins/abilities')
 var createdAt = require('./plugins/createdAt')
 var updatedAt = require('./plugins/updatedAt')
@@ -60,6 +61,12 @@ User.methods.comparePassword = function comparePassword (candidatePassword, call
   bcrypt.compare(candidatePassword, this.password, callback)
 }
 
+// Сгенерить новый токен для этого юзера
+User.methods.generateConfirmationToken = function generateConfirmationToken (callback) {
+  var verificationToken = new VerificationToken({user: this._id})
+  verificationToken.createVerificationToken(callback)
+}
+
 // User.updateCommentsCount(user._id, cb)
 User.static('updateCommentsCount', function updateCommentsCount (id, next) {
   var model = this
@@ -96,11 +103,14 @@ User.pre('save', function (next) {
   user.emailConfirmed = false
   next()
 
-  SendEmail({
-    title: 'Confirmation email',
-    user: user,
-    token: 'test token',
-    template: 'users/confirm-email'
+  user.generateConfirmationToken((err, token) => {
+    if (err) return next(err)
+    SendEmail({
+      title: 'Confirmation instructions',  // TODO: хорошо бы сразу интернациализацию прикрутить
+      user: user,
+      token: token,
+      template: 'users/confirm-email'
+    })
   })
 })
 
