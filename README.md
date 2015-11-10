@@ -33,10 +33,15 @@ https://github.com/HenrikJoreteg/templatizer
 - [X] Email send
 - [ ] Social login 
 
+Email
+
+- [ ] Confirm email
+- [ ] New reply on your comment
+
 Comments
 
 - [ ] Editing comments
-- [ ] Deleting comments
+- [X] Deleting comments
 - [ ] Dropdown in top right angle for share, edit, delete and etc...
 - [ ] Pagination for mainpage and replies
 
