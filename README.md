@@ -37,7 +37,7 @@ https://github.com/HenrikJoreteg/templatizer
 
 Email
 
-- [ ] Confirm email
+- [X] Confirm email (Need refactoring)
 - [ ] New reply on your comment
 
 Comments
