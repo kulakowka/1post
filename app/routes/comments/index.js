@@ -13,10 +13,10 @@ router.get('/',
   (req, res, next) => {
     Comment
     .find({
-      parentId: ROOT_PARENT_ID, 
+      parentId: ROOT_PARENT_ID,
       isDeleted: {
         $ne: true
-      } 
+      }
     })
     .populate({
       path: 'creator',

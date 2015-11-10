@@ -52,7 +52,8 @@ module.exports = function EmbedlyService (text) {
     
     getPageData(url, (err, data) => {
       if (err) return reject(err)
-      resolve(templateLink(data))
+      var text = templateLink(data)
+      resolve(text)
     })
   })
   
