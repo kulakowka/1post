@@ -1,3 +1,27 @@
+var marked = require('marked')
+var highlightjs = require('highlight.js')
+var renderer = new marked.Renderer()
+
+// переопределим функцию которая рендерит ссылки
+renderer.link = renderLink
+
+// настройки парсинга markdown в html
+marked.setOptions({
+  renderer: renderer,
+  gfm: true,
+  tables: false,
+  breaks: true,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false,
+  highlight: (code, lang, callback) => {
+    return highlightjs.highlightAuto(code).value
+  }
+})
+
+const IMG_REGEXP = /\.(png|jpg|gif|jpeg)$/i
+
 /**
  * @example
  * MarkedService(text)
@@ -5,14 +29,19 @@
  * .then(html => cb(null, html))
  *
  */
+module.exports = function MarkedService (text) {
+  return new Promise((resolve, reject) => {
+    marked(text, (err, html) => {
+      if (err) return reject(err)
+      resolve(html)
+    })
+  })
+}
 
-var marked = require('marked')
-var highlightjs = require('highlight.js')
-var renderer = new marked.Renderer()
-
-const IMG_REGEXP = /\.(png|jpg|gif|jpeg)$/i
-
-renderer.link = function (href, title, text) {
+/**
+ * Функция которая заменяет стандартный рендеринг ссылок в marked
+ */
+function renderLink (href, title, text) {
   if (this.options.sanitize) {
     try {
       var prot = decodeURIComponent(unescape(href))
@@ -37,26 +66,4 @@ renderer.link = function (href, title, text) {
   out += '>' + text + '</a>'
 
   return out
-}
-
-marked.setOptions({
-  renderer: renderer,
-  gfm: true,
-  tables: false,
-  breaks: true,
-  pedantic: false,
-  sanitize: true,
-  smartLists: true,
-  smartypants: false,
-  highlight: (code, lang, callback) => {
-    return highlightjs.highlightAuto(code).value
-  }
-})
-
-module.exports = marked
-
-module.exports = function MarkedService (text) {
-  return new Promise((resolve, reject) => {
-    resolve(marked(text))
-  })
 }
