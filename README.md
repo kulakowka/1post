@@ -32,7 +32,8 @@ https://github.com/HenrikJoreteg/templatizer
 - [X] User profile
 - [X] Email send
 - [ ] Social login 
-- [ ] Refactoring and clean up coments
+- [ ] Refactoring and clean up comments
+- [X] Refactoring services
 
 Email
 
