@@ -60,12 +60,12 @@ User.methods.comparePassword = function comparePassword (candidatePassword, call
 
 // ACL
 var rules = {
-  delete: function (model) {
-    this._id.equals(model.creator._id)
+  delete: function (user, model) {
+    return user._id.equals(model.creator._id)
   }
 }
 User.methods.can = function can (rule, model) {
-  return rules[rule](model).bind(this)
+  return rules[rule](this, model)
 }
 
 // User.updateCommentsCount(user._id, cb)
