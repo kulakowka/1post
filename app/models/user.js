@@ -3,6 +3,7 @@
 var bcrypt = require('bcrypt')
 var mongoose = require('../config/db')
 var Comment = require('./comment')
+var abilities = require('./plugins/abilities')
 var createdAt = require('./plugins/createdAt')
 var updatedAt = require('./plugins/updatedAt')
 var deletedAt = require('./plugins/deletedAt')
@@ -52,20 +53,11 @@ var User = Schema({
 User.plugin(createdAt, { index: true })
 User.plugin(updatedAt)
 User.plugin(deletedAt)
+User.plugin(abilities) // ACL
 
 // user.comparePassword(password, (err, isMath) => {})
 User.methods.comparePassword = function comparePassword (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, callback)
-}
-
-// ACL
-var rules = {
-  delete: function (user, model) {
-    return user._id.equals(model.creator._id)
-  }
-}
-User.methods.can = function can (rule, model) {
-  return rules[rule](this, model)
 }
 
 // User.updateCommentsCount(user._id, cb)

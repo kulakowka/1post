@@ -4,8 +4,8 @@ article.commentItem(id="comment_" + comment._id )
     if currentUser.can('delete', comment)
       a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
   if comment.isDeleted
-    .textHtml 
-      s= "Comment deleted"
+    .textHtml
+      s!= comment.textHtml
   else
     .textHtml!= comment.textHtml
   .meta
