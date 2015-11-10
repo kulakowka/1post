@@ -58,6 +58,16 @@ User.methods.comparePassword = function comparePassword (candidatePassword, call
   bcrypt.compare(candidatePassword, this.password, callback)
 }
 
+// ACL
+var rules = {
+  delete: function (model) {
+    this._id.equals(model.creator._id)
+  }
+}
+User.methods.can = function can (rule, model) {
+  return rules[rule](model).bind(this)
+}
+
 // User.updateCommentsCount(user._id, cb)
 User.static('updateCommentsCount', function updateCommentsCount (id, next) {
   var model = this

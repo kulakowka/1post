@@ -1,7 +1,7 @@
 article.commentItem(id="comment_" + comment._id )
 
   .controls
-    if (currentUser._id.equals(comment.creator._id))
+    if user.can('delete', comment)
       a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
   if comment.isDeleted
     .textHtml 
