@@ -7,6 +7,7 @@ module.exports.loadReplies = loadReplies
 module.exports.clearReplies = clearReplies
 module.exports.onClickRepliesCount = onClickRepliesCount
 module.exports.onClickReply = onClickReply
+module.exports.onClickDelete = onClickDelete
 module.exports.loadInitialComments = loadInitialComments
 module.exports.initTextareaAutosize = initTextareaAutosize
 module.exports.executeImages = executeImages
@@ -82,6 +83,16 @@ function onClickReply () {
   replies.append(replyForm)
   autosize(replyForm.find('textarea'))
   replyForm.find('textarea').val('').focus()
+  return false
+}
+
+function onClickDelete () {
+  var link = $(this)
+  var id = link.attr('data-id')
+  
+  $.post('/c/' + id + '/delete', function(html) {
+    $("#comment_" + id).replaceWith(html)
+  })
   return false
 }
 

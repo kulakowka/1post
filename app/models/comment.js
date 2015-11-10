@@ -12,13 +12,11 @@ var Comment = Schema({
   metaTitle: {
     type: String,
     trim: true,
-    minlength: 1,
     maxlength: 200
   },
   metaDescription: {
     type: String,
     trim: true,
-    minlength: 1,
     maxlength: 200
   },
   textSource: {

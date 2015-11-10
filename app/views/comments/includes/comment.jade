@@ -1,5 +1,13 @@
 article.commentItem(id="comment_" + comment._id )
-  .textHtml!= comment.textHtml
+
+  .controls
+    if (currentUser._id.equals(comment.creator._id))
+      a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
+  if comment.isDeleted
+    .textHtml 
+      s= "Comment deleted"
+  else
+    .textHtml!= comment.textHtml
   .meta
     if comment.repliesCount
       a.repliesCount.js-comment-replies(href="/c/" + comment._id data-id=comment._id.toString())
