@@ -34,7 +34,7 @@ https://github.com/HenrikJoreteg/templatizer
 - [ ] Social login 
 - [ ] Refactoring and clean up comments
 - [X] Refactoring services
-- [ ] Tests with [http://mochajs.org/](mocha)
+- [ ] Tests with [mocha](http://mochajs.org/)
 
 Email
 
