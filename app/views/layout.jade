@@ -1,6 +1,7 @@
 doctype html
 html
   head
+    != newrelic.getBrowserTimingHeader()
     link(rel='stylesheet' href='/css/app.css')
     block head
       title= title
