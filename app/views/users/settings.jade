@@ -14,9 +14,8 @@ block content
     .field
       label.field-label(for="email-field") email:
       input.field-input(id="email-field" type="email" name="email" placeholder="email" autocomplete="off" value=currentUser.email)
-      small
-        = "emailConfirmed: "
-        = currentUser.emailConfirmed ? 'true' : 'false'
+      unless currentUser.emailConfirmed
+        small Email not confirmed
     .field
       label.field-label(for="password-field") current password: *
       input.field-input(id="password-field" type="password" name="password" placeholder="current password" autocomplete="off" required)

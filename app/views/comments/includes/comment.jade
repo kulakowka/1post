@@ -1,8 +1,6 @@
 article.commentItem(id="comment_" + comment._id class=comment.isDeleted ? "deleted" : "" )
 
-  .controls
-    if currentUser.can('delete', comment)
-      a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
+  
   
   .textHtml!= comment.textHtml
   .meta
@@ -21,4 +19,13 @@ article.commentItem(id="comment_" + comment._id class=comment.isDeleted ? "delet
   
     if !comment.parentId.equals(ROOT_PARENT_ID)
       a.parentId(href="/c/" + comment.parentId) parent
+
+    if currentUser && currentUser.can('delete', comment)
+      .controls
+        .dropdown
+          .handler.js-dropdown-handler(tabindex=1)
+            span.icon-keyboard_control
+          .menu
+            a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
+
   .replies
