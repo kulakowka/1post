@@ -89,9 +89,9 @@ function onClickReply () {
 function onClickDelete () {
   var link = $(this)
   var id = link.attr('data-id')
-  
-  $.post('/c/' + id + '/delete', function(html) {
-    $("#comment_" + id).replaceWith(html)
+
+  $.post('/c/' + id + '/delete', function (html) {
+    $('#comment_' + id).replaceWith(html)
   })
   return false
 }
@@ -117,6 +117,6 @@ function executeImages () {
   })
 }
 
-function cdnImage (url, width) {
-  return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + url + '&container=focus&refresh=2592000&resize_w=' + width
-}
+// function cdnImage (url, width) {
+//   return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + url + '&container=focus&refresh=2592000&resize_w=' + width
+// }

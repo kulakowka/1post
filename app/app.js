@@ -8,11 +8,8 @@ var helmet = require('helmet')
 var browserify = require('browserify-middleware')
 var staticPath = require('./config/static')
 var compression = require('compression')
-var newrelic = require('newrelic')
 
 var app = express()
-
-app.locals.newrelic = newrelic
 
 app.use(helmet())
 

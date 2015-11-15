@@ -177,7 +177,7 @@ router.post('/c/:id/delete',
 
   (req, res, next) => {
     if (!req.user._id.equals(res.locals.comment.creator._id)) return res.status(403).json({error: 'Permission denied'})
-      next()
+    next()
   },
 
   (req, res, next) => {
