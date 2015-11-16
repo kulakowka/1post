@@ -13,6 +13,8 @@ block content
       th updatedAt
       th deletedAt
       th isDeleted
+      th email
+      th confirmed
       th commentsCount
     each user in users
       tr
@@ -26,4 +28,6 @@ block content
           if user.deletedAt
             small= moment(user.deletedAt).format("DD.MM.YYYY HH:MM:SS")
         td= user.isDeleted ? 'deleted' : ''
+        td= user.email
+        td= user.emailConfirmed ? 'confirmed' : ''
         td= user.commentsCount
