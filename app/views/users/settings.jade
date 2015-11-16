@@ -9,10 +9,15 @@ block content
   h3 Profile
   form.js-form-user-update
     .field
-      label.field-label(for="username-field") username:
+      label.field-label(for="username-field") username: *
       input.field-input(id="username-field" type="text" name="username" placeholder="username" autocomplete="off" maxLength="20" value=currentUser.username)
     .field
-      label.field-label(for="password-field") current password:
+      label.field-label(for="email-field") email:
+      input.field-input(id="email-field" type="email" name="email" placeholder="email" autocomplete="off" value=currentUser.email)
+      unless currentUser.emailConfirmed
+        small Email not confirmed
+    .field
+      label.field-label(for="password-field") current password: *
       input.field-input(id="password-field" type="password" name="password" placeholder="current password" autocomplete="off" required)
     .field
       label.field-label(for="newPassword-field") new password:
@@ -23,7 +28,7 @@ block content
   h3 Delete account
   form.js-form-user-destroy
     .field
-      label.field-label(for="password-2-field") current password:
+      label.field-label(for="password-2-field") current password: *
       input.field-input(id="password-2-field" type="password" name="password" placeholder="current password" autocomplete="off" required)
     .field
       button.btn.btn-submit(type="submit") Delete account

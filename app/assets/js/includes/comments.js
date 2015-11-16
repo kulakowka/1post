@@ -7,6 +7,7 @@ module.exports.loadReplies = loadReplies
 module.exports.clearReplies = clearReplies
 module.exports.onClickRepliesCount = onClickRepliesCount
 module.exports.onClickReply = onClickReply
+module.exports.onClickDelete = onClickDelete
 module.exports.loadInitialComments = loadInitialComments
 module.exports.initTextareaAutosize = initTextareaAutosize
 module.exports.executeImages = executeImages
@@ -85,6 +86,16 @@ function onClickReply () {
   return false
 }
 
+function onClickDelete () {
+  var link = $(this)
+  var id = link.attr('data-id')
+
+  $.post('/c/' + id + '/delete', function (html) {
+    $('#comment_' + id).replaceWith(html)
+  })
+  return false
+}
+
 function loadInitialComments () {
   var comment = $('#commentsShow > .commentItem').first()
   if (!comment.length) return
@@ -105,3 +116,7 @@ function executeImages () {
     $(this).html(img)
   })
 }
+
+// function cdnImage (url, width) {
+//   return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + url + '&container=focus&refresh=2592000&resize_w=' + width
+// }

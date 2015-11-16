@@ -1,0 +1,52 @@
+dropdownSize = 30px
+menuWidth = 200px
+
+.dropdown
+  width dropdownSize
+  height dropdownSize
+  //background yellow
+  position relative
+
+  .handler
+    width dropdownSize
+    height dropdownSize
+    line-height dropdownSize
+    text-align center
+    color darkGreyColor
+    cursor pointer
+    font-size smallFontSize + 4
+    &:focus
+      outline none
+    &:hover
+      color blueColor
+      //background pink
+    // span.icon-expand_more
+  &.open .menu
+    display: block
+    
+  .menu
+    display: none
+    position absolute
+    right 0
+    bottom dropdownSize 
+    z-index 1
+    // width menuWidth
+    background white
+    border 1px solid greyColor
+    white-space nowrap
+    line-height 22px
+    a
+      display block
+      padding 0px 10px
+      color darkGreyColor
+      font-weight bold
+      font-size smallFontSize - 2
+      text-transform lowercase
+      text-decoration none
+      &:hover
+        background-color blueColor
+        color white
+    a + a 
+      border-top 1px solid greyColor
+      
+

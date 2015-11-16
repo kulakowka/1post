@@ -1,4 +1,7 @@
-article.commentItem(id="comment_" + comment._id )
+article.commentItem(id="comment_" + comment._id class=comment.isDeleted ? "deleted" : "" )
+
+  
+  
   .textHtml!= comment.textHtml
   .meta
     if comment.repliesCount
@@ -16,4 +19,13 @@ article.commentItem(id="comment_" + comment._id )
   
     if !comment.parentId.equals(ROOT_PARENT_ID)
       a.parentId(href="/c/" + comment.parentId) parent
+
+    if !comment.isDeleted && currentUser && currentUser.can('delete', comment)
+      .controls
+        .dropdown
+          .handler.js-dropdown-handler(tabindex=1)
+            span.icon-keyboard_control
+          .menu
+            a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
+
   .replies

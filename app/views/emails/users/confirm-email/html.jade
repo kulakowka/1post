@@ -1,0 +1,11 @@
+//- Confirm email plese
+extends ../../layout
+
+block content
+  p Hello #{user.username}!
+
+  p You can confirm your account email through the link below:
+  p 
+    a.btn(href='http://1po.st/confirm/'+token) Confirm my account
+
+  

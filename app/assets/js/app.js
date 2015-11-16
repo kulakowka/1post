@@ -5,6 +5,7 @@ attachFastClick(document.body)
 
 var comments = require('./includes/comments')
 var users = require('./includes/users')
+var dropdown = require('./helpers/dropdown')
 
 $(document)
 
@@ -12,6 +13,8 @@ $(document)
   .on('submit', '.js-form-comment', comments.commentCreate)
   .on('click', '.js-comment-replies', comments.onClickRepliesCount)
   .on('click', '.js-comment-reply', comments.onClickReply)
+  .on('click', '.js-comment-delete', comments.onClickDelete)
+  .on('click', '.js-dropdown-handler', dropdown.onClickHandler)
   .on('ready', comments.loadInitialComments)
   .on('ready', comments.initTextareaAutosize)
   .on('ready', comments.executeImages)

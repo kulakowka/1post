@@ -3,9 +3,12 @@
 var bcrypt = require('bcrypt')
 var mongoose = require('../config/db')
 var Comment = require('./comment')
+var VerificationToken = require('./verificationToken')
+var abilities = require('./plugins/abilities')
 var createdAt = require('./plugins/createdAt')
 var updatedAt = require('./plugins/updatedAt')
 var deletedAt = require('./plugins/deletedAt')
+var SendEmail = require('../services/emails/sendEmail')
 
 var Schema = mongoose.Schema
 
@@ -19,6 +22,18 @@ var User = Schema({
     required: true,
     lowercase: true,
     unique: true
+  },
+  email: {
+    type: String,
+    index: true,
+    trim: true,
+    minlength: 3,
+    maxlength: 20,
+    lowercase: true,
+    unique: true
+  },
+  emailConfirmed: {
+    type: Boolean
   },
   password: {
     type: String,
@@ -39,17 +54,29 @@ var User = Schema({
 User.plugin(createdAt, { index: true })
 User.plugin(updatedAt)
 User.plugin(deletedAt)
+User.plugin(abilities) // ACL
 
 // user.comparePassword(password, (err, isMath) => {})
 User.methods.comparePassword = function comparePassword (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, callback)
 }
 
+// Сгенерить новый токен для этого юзера
+User.methods.generateConfirmationToken = function generateConfirmationToken (callback) {
+  var verificationToken = new VerificationToken({user: this._id})
+  verificationToken.createVerificationToken(callback)
+}
+
 // User.updateCommentsCount(user._id, cb)
 User.static('updateCommentsCount', function updateCommentsCount (id, next) {
   var model = this
   Comment
-  .where({creator: id})
+  .where({
+    creator: id,
+    isDeleted: {
+      $ne: true
+    }
+  })
   .count((err, count) => {
     if (err) return next(err)
     model.findOneAndUpdate({_id: id}, {commentsCount: count}).exec(next)
@@ -69,6 +96,25 @@ User.pre('save', function (next) {
 
       user.password = hash
       next()
+    })
+  })
+})
+
+User.pre('save', function (next) {
+  var user = this
+
+  if (!user.isModified('email')) return next()
+
+  user.emailConfirmed = false
+  next()
+
+  user.generateConfirmationToken((err, token) => {
+    if (err) return next(err)
+    SendEmail({
+      title: 'Confirmation instructions',  // TODO: хорошо бы сразу интернациализацию прикрутить
+      user: user,
+      token: token,
+      template: 'users/confirm-email'
     })
   })
 })

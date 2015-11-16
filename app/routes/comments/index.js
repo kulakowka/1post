@@ -1,4 +1,5 @@
 const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
+const adminUsername = process.env.ADMIN_USERNAME || 'kulakowka'
 
 var Comment = require('../../models/comment')
 var User = require('../../models/user')
@@ -12,7 +13,12 @@ router.get('/',
   // load latest comments
   (req, res, next) => {
     Comment
-    .find({parentId: ROOT_PARENT_ID})
+    .find({
+      parentId: ROOT_PARENT_ID,
+      isDeleted: {
+        $ne: true
+      }
+    })
     .populate({
       path: 'creator',
       select: 'username'
@@ -125,7 +131,12 @@ router.get('/c/:id/replies',
     var sort = ROOT_PARENT_ID.equals(req.params.id) ? -1 : 1
 
     Comment
-      .find({parentId: req.params.id})
+      .find({
+        parentId: req.params.id,
+        isDeleted: {
+          $ne: true
+        }
+      })
       .populate({
         path: 'creator',
         select: 'username'
@@ -147,6 +158,46 @@ router.get('/c/:id/replies',
       parentId: req.params.id,
       ROOT_PARENT_ID: ROOT_PARENT_ID
     })
+  }
+)
+
+// POST /comments/:id/delete
+router.post('/c/:id/delete',
+
+  // load comment
+  (req, res, next) => {
+    Comment
+    .findById(req.params.id)
+    .populate({
+      path: 'creator',
+      select: 'username _id'
+    })
+    .select('-textSource')
+    .exec()
+    .catch(next)
+    .then(comment => {
+      res.locals.comment = comment
+      next()
+    })
+  },
+
+  (req, res, next) => {
+    if (adminUsername !== req.user.username && !req.user._id.equals(res.locals.comment.creator._id)) return res.status(403).json({error: 'Permission denied'})
+    next()
+  },
+
+  (req, res, next) => {
+    var comment = res.locals.comment
+
+    comment.isDeleted = true
+
+    comment.save((err, comment) => {
+      if (err) return next(err)
+      res.redirect('/c/' + comment._id)
+    })
+
+    Comment.updateRepliesCount(comment.parentId)
+    User.updateCommentsCount(comment.creator)
   }
 )
 
