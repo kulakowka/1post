@@ -80,7 +80,12 @@ Comment.static('updateRepliesCount', function updateRepliesCount (id, next) {
   if (ROOT_PARENT_ID === id) return
   var model = this
   model
-  .where({parentId: id})
+  .where({
+    parentId: id,
+    isDeleted: {
+      $ne: true
+    }
+  })
   .count((err, count) => {
     if (err) return next(err)
     model.findOneAndUpdate({_id: id}, {repliesCount: count}).exec(next)

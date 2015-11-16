@@ -69,9 +69,15 @@ User.methods.generateConfirmationToken = function generateConfirmationToken (cal
 
 // User.updateCommentsCount(user._id, cb)
 User.static('updateCommentsCount', function updateCommentsCount (id, next) {
+  console.log('User.updateCommentsCount(user._id, cb)', id)
   var model = this
   Comment
-  .where({creator: id})
+  .where({
+    creator: id,
+    isDeleted: {
+      $ne: true
+    }
+  })
   .count((err, count) => {
     if (err) return next(err)
     model.findOneAndUpdate({_id: id}, {commentsCount: count}).exec(next)

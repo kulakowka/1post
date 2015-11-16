@@ -1,21 +1,28 @@
 extends ../layout.jade
 
 block head
-  title= title
-  meta(content=description name='description')
-  meta(property="og:type" content="article")
-  meta(property="og:url" content="http://1po.st/c/" + comment._id)
-  meta(property="og:title" content=title)
-  meta(property="og:description" content=description)
-  meta(property="og:article:published_time" content=comment.createdAt.toISOString())
-  meta(property="og:article:modified_time" content=comment.updatedAt.toISOString())
-  meta(property="og:article:author" content=comment.creator.username)
-  //- meta(property="og:article:section" content="Technology")
-  //- meta(property="og:article:tag" content="web internet")  
+  if comment.isDeleted
+    title Comment has been deleted
+  else
+    title= title
+    meta(content=description name='description')
+    meta(property="og:type" content="article")
+    meta(property="og:url" content="http://1po.st/c/" + comment._id)
+    meta(property="og:title" content=title)
+    meta(property="og:description" content=description)
+    meta(property="og:article:published_time" content=comment.createdAt.toISOString())
+    meta(property="og:article:modified_time" content=comment.updatedAt.toISOString())
+    meta(property="og:article:author" content=comment.creator.username)
+    //- meta(property="og:article:section" content="Technology")
+    //- meta(property="og:article:tag" content="web internet")  
 
 block content
-  #commentsShow
-    include ./includes/comment.jade
+  if comment.isDeleted
+    h1 Comment has been deleted
+    a.btn.btn-submit(href="/") Back to the main page
+  else
+    #commentsShow
+      include ./includes/comment.jade
 
   .hidden
     include ./includes/form.jade

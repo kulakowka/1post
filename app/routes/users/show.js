@@ -32,7 +32,12 @@ router.get('/:username',
     var user = res.locals.user
 
     Comment
-    .find({creator: user._id})
+    .find({
+      creator: user._id,
+      isDeleted: {
+        $ne: true
+      }
+    })
     .limit(200)
     .sort({createdAt: -1})
     .select('-textSource')

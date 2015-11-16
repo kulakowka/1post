@@ -1,12 +1,13 @@
+var adminUsername = process.env.ADMIN_USERNAME || 'kulakowka'
 
 var rules = {
 
   edit: function (user, model) {
-    return user._id.equals(model.creator._id)
+    return user._id.equals(model.creator._id) || user.username === adminUsername
   },
 
   delete: function (user, model) {
-    return user._id.equals(model.creator._id)
+    return user._id.equals(model.creator._id) || user.username === adminUsername
   }
 }
 
