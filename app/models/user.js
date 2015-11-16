@@ -69,7 +69,6 @@ User.methods.generateConfirmationToken = function generateConfirmationToken (cal
 
 // User.updateCommentsCount(user._id, cb)
 User.static('updateCommentsCount', function updateCommentsCount (id, next) {
-  console.log('User.updateCommentsCount(user._id, cb)', id)
   var model = this
   Comment
   .where({
