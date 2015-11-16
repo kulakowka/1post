@@ -69,7 +69,7 @@ function getUrls (comments) {
  */
 function getComment (comment) {
   return {
-    url: '/comments/' + comment._id,
+    url: '/c/' + comment._id,
     changefreq: 'weekly',
     lastmod: comment.updatedAt
   }
