@@ -1,8 +1,7 @@
-article.commentItem(id="comment_" + comment._id class=comment.isDeleted ? "deleted" : "" )
-
+article.commentItem(itemscope itemtype="http://schema.org/Article" id="comment_" + comment._id class=comment.isDeleted ? "deleted" : "" )
   
-  
-  .textHtml!= comment.textHtml
+  .textHtml(itemprop="articleBody")!= comment.textHtml
+  meta(itemprop="headline" content=comment.metaTitle)
   .meta
     if comment.repliesCount
       a.repliesCount.js-comment-replies(href="/c/" + comment._id data-id=comment._id.toString())
@@ -15,7 +14,7 @@ article.commentItem(id="comment_" + comment._id class=comment.isDeleted ? "delet
     a.creator(class=(adminName === comment.creator.username ? "admin" : "") href="/" + comment.creator.username)
       = "@"
       = comment.creator.username
-    a.createdAt(href="/c/" + comment._id)= moment(comment.createdAt).toNow(true)
+    a.createdAt(href="/c/" + comment._id itemprop="datePublished" content=moment(comment.createdAt).format())= moment(comment.createdAt).toNow(true)
   
     if !comment.parentId.equals(ROOT_PARENT_ID)
       a.parentId(href="/c/" + comment.parentId) parent

@@ -5,9 +5,12 @@
 
 article.commentItem
   display block
-  margin 0 -20px
-  padding 10px 20px
+  margin 0 -10px
+  padding 10px 10px
   position relative
+  @media all and (min-width: minWidth)
+    margin 0 -20px
+    padding 20px 20px
   &.deleted
     background-color rgba(0, 0, 0, 0.05)
     .textHtml

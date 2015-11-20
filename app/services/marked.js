@@ -1,3 +1,5 @@
+'use strict'
+
 var marked = require('marked')
 var highlightjs = require('highlight.js')
 var renderer = new marked.Renderer()
@@ -15,7 +17,7 @@ marked.setOptions({
   sanitize: true,
   smartLists: true,
   smartypants: false,
-  highlight: (code, lang, callback) => {
+  highlight: function (code, lang, callback) {
     return highlightjs.highlightAuto(code).value
   }
 })
@@ -30,12 +32,8 @@ const IMG_REGEXP = /\.(png|jpg|gif|jpeg)$/i
  *
  */
 module.exports = function MarkedService (text) {
-  return new Promise((resolve, reject) => {
-    marked(text, (err, html) => {
-      if (err) return reject(err)
-      resolve(html)
-    })
-  })
+  var html = marked(text)
+  return Promise.resolve(html)
 }
 
 /**
