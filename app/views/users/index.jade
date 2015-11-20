@@ -9,17 +9,19 @@ block content
   table
     tr
       th username
+      th commentsCount
       th createdAt
       th updatedAt
       th deletedAt
       th isDeleted
       th email
       th confirmed
-      th commentsCount
+      
     each user in users
       tr
         td
           a(href="/" + user.username)= user.username
+        td= user.commentsCount
         td
           small= moment(user.createdAt).format("DD.MM.YYYY HH:MM:SS")
         td
@@ -30,4 +32,4 @@ block content
         td= user.isDeleted ? 'deleted' : ''
         td= user.email
         td= user.emailConfirmed ? 'confirmed' : ''
-        td= user.commentsCount
+        
