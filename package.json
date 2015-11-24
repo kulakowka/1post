@@ -7,8 +7,7 @@
     "url": "https://github.com/kulakowka/1post.git"
   },
   "scripts": {
-    "start": "DEBUG=app:*  nodemon ./bin/www --es_staging",
-    "rsync": "rsync -av --delete ./ onepost@geekhub.vhost.firehub.net:sites/onepost/ --exclude=\"node_modules\" ",
+    "start": "DEBUG=app:* nodemon ./bin/www --es_staging",
     "test": "standard"
   },
   "pre-commit": [
