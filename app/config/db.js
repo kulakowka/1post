@@ -1,7 +1,6 @@
 var mongoose = require('mongoose')
 
-// Use native promises
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise // Use native promises
 
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/express_app_v7'
 

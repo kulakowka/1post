@@ -2,7 +2,18 @@
 
 const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
+// Services
+var EmbedlyService = require('../services/embedly')
+var MarkedService = require('../services/marked')
+var MetaTagsService = require('../services/metaTags')
+
+// Mongoose plugins
+var createdAt = require('./plugins/createdAt')
+var updatedAt = require('./plugins/updatedAt')
+var deletedAt = require('./plugins/deletedAt')
+
 var mongoose = require('../config/db')
+
 var Schema = mongoose.Schema
 
 var Comment = Schema({
@@ -48,18 +59,9 @@ var Comment = Schema({
   }
 })
 
-var createdAt = require('./plugins/createdAt')
-var updatedAt = require('./plugins/updatedAt')
-var deletedAt = require('./plugins/deletedAt')
-
 Comment.plugin(createdAt, { index: true })
 Comment.plugin(updatedAt)
 Comment.plugin(deletedAt)
-
-// Модификация текста комментария
-var EmbedlyService = require('../services/embedly')
-var MarkedService = require('../services/marked')
-var MetaTagsService = require('../services/metaTags')
 
 Comment.pre('save', function (next) {
   var comment = this
@@ -75,7 +77,7 @@ Comment.pre('save', function (next) {
   .catch(next)
 })
 
-// Comment.updateRepliesCount(comment._id, cb)
+// usage: Comment.updateRepliesCount(comment._id, cb)
 Comment.static('updateRepliesCount', function updateRepliesCount (id, next) {
   if (ROOT_PARENT_ID === id) return
   var model = this

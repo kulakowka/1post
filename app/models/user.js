@@ -1,14 +1,21 @@
 'use strict'
 
 var bcrypt = require('bcrypt')
-var mongoose = require('../config/db')
+
+// Other models
 var Comment = require('./comment')
 var VerificationToken = require('./verificationToken')
+
+// Services
+var SendEmail = require('../services/emails/sendEmail')
+
+// Mongoose plugins
 var abilities = require('./plugins/abilities')
 var createdAt = require('./plugins/createdAt')
 var updatedAt = require('./plugins/updatedAt')
 var deletedAt = require('./plugins/deletedAt')
-var SendEmail = require('../services/emails/sendEmail')
+
+var mongoose = require('../config/db')
 
 var Schema = mongoose.Schema
 
@@ -56,18 +63,15 @@ User.plugin(updatedAt)
 User.plugin(deletedAt)
 User.plugin(abilities) // ACL
 
-// user.comparePassword(password, (err, isMath) => {})
 User.methods.comparePassword = function comparePassword (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, callback)
 }
 
-// Сгенерить новый токен для этого юзера
 User.methods.generateConfirmationToken = function generateConfirmationToken (callback) {
   var verificationToken = new VerificationToken({user: this._id})
   verificationToken.createVerificationToken(callback)
 }
 
-// User.updateCommentsCount(user._id, cb)
 User.static('updateCommentsCount', function updateCommentsCount (id, next) {
   var model = this
   Comment
@@ -111,7 +115,7 @@ User.pre('save', function (next) {
   user.generateConfirmationToken((err, token) => {
     if (err) return next(err)
     SendEmail({
-      title: 'Confirmation instructions',  // TODO: хорошо бы сразу интернациализацию прикрутить
+      title: 'Confirmation instructions',
       user: user,
       token: token,
       template: 'users/confirm-email'

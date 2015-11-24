@@ -22,7 +22,7 @@ router.get('/:username',
   // if user not found
   (req, res, next) => {
     if (res.locals.user) return next()
-    // TODO: Здесь еще надо бы порефакторить выглядит как то тупо :)
+    // TODO: Need refactoring
     var err = new Error('User Not Found')
     err.status = 404
     next(err)

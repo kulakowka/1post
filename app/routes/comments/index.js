@@ -68,7 +68,7 @@ router.post('/c/create',
     var comment = res.locals.comment
     res.redirect('/c/' + comment._id)
 
-    // TODO: надо убрать будет отсюда наверное в модели?
+    // TODO: should be removed from here will probably in the model?
     Comment.updateRepliesCount(comment.parentId)
     User.updateCommentsCount(comment.creator)
   }
@@ -98,7 +98,7 @@ router.get('/c/:id',
   // if comment not found
   (req, res, next) => {
     if (res.locals.comment) return next()
-    // TODO: Здесь еще надо бы порефакторить выглядит как то тупо :)
+    // TODO: There still need to refactoring
     var err = new Error('Comment Not Found')
     err.status = 404
     next(err)

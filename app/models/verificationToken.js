@@ -1,7 +1,9 @@
 'use strict'
 
 var uuid = require('node-uuid')
+
 var mongoose = require('../config/db')
+
 var Schema = mongoose.Schema
 
 var VerificationTokenSchema = Schema({
@@ -34,7 +36,6 @@ VerificationTokenSchema.methods.createVerificationToken = function (done) {
   })
 }
 
-// VerificationToken.verifyUser(token, cb)
 VerificationTokenSchema.static('verifyUser', function verifyUser (token, done) {
   this
   .findOne({token: token})

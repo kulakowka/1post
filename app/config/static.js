@@ -2,8 +2,8 @@ var express = require('express')
 var path = require('path')
 var favicon = require('serve-favicon')
 
-const PUBLIC_MAX_AGE = 1000 * 60 * 60 * 24 * 8 // 8 дней
-const STATIC_MAX_AGE = 1000 * 60 * 60 * 24 * 14 // 14 дней
+const PUBLIC_MAX_AGE = 1000 * 60 * 60 * 24 * 8 // 8 days
+const STATIC_MAX_AGE = 1000 * 60 * 60 * 24 * 14 // 14 days
 
 module.exports.public = express.static(path.resolve(__dirname, '../../public'), {
   maxAge: PUBLIC_MAX_AGE
