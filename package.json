@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "DEBUG=app:* nodemon ./bin/www --es_staging",
-    "test": "standard"
+    "test": ""
   },
   "pre-commit": [
     "test"
