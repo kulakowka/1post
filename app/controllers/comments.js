@@ -6,8 +6,6 @@ const Comment = require('../models/comment')
 // get root parent comment id
 const ROOT_PARENT_ID = require('../config/comments').ROOT_PARENT_ID
 
-
-
 // POST /comments
 module.exports.create = (req, res, next) => {
 
