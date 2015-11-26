@@ -1,204 +1,214 @@
-const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
-const adminUsername = process.env.ADMIN_USERNAME || 'kulakowka'
-
-var Comment = require('../../models/comment')
-var User = require('../../models/user')
-
 var express = require('express')
 var router = express.Router()
+var controller = require('../controllers/comments')
 
-// Mainpage
-router.get('/',
+router.get('/', controller.index)
+router.get('/:id', controller.show)
+router.post('/', controller.create)
+router.put('/:id', controller.update)
+router.delete('/:id', controller.delete)
 
-  // load latest comments
-  (req, res, next) => {
-    Comment
-    .find({
-      parentId: ROOT_PARENT_ID,
-      isDeleted: {
-        $ne: true
-      }
-    })
-    .populate({
-      path: 'creator',
-      select: 'username'
-    })
-    .limit(200)
-    .sort({createdAt: -1})
-    .select('-textSource')
-    .exec()
-    .catch(next)
-    .then(comments => {
-      res.locals.comments = comments
-      next()
-    })
-  },
+// const ROOT_PARENT_ID = require('../../config/comments').ROOT_PARENT_ID
+// const adminUsername = process.env.ADMIN_USERNAME || 'kulakowka'
 
-  // render comments list view
-  (req, res, next) => {
-    res.render('comments/index', {
-      title: '1 Po.st',
-      description: 'Internet community',
-      parentId: ROOT_PARENT_ID,
-      ROOT_PARENT_ID: ROOT_PARENT_ID
-    })
-  }
-)
+// var Comment = require('../../models/comment')
+// var User = require('../../models/user')
 
-// Create comment
-router.post('/c/create',
+// var express = require('express')
+// var router = express.Router()
 
-  // save comment to db
-  (req, res, next) => {
-    new Comment({
-      textSource: req.body.textSource,
-      parentId: req.body.parentId,
-      creator: req.user._id
-    })
-    .save()
-    .catch(next)
-    .then(comment => {
-      res.locals.comment = comment
-      next()
-    })
-  },
+// // Mainpage
+// router.get('/', 
 
-  // redirect to comment show without layout
-  (req, res, next) => {
-    var comment = res.locals.comment
-    res.redirect('/c/' + comment._id)
+//   // load latest comments
+//   (req, res, next) => {
+//     Comment
+//     .find({
+//       parentId: ROOT_PARENT_ID,
+//       isDeleted: {
+//         $ne: true
+//       }
+//     })
+//     .populate({
+//       path: 'creator',
+//       select: 'username'
+//     })
+//     .limit(200)
+//     .sort({createdAt: -1})
+//     .select('-textSource')
+//     .exec()
+//     .catch(next)
+//     .then(comments => {
+//       res.locals.comments = comments
+//       next()
+//     })
+//   },
 
-    // TODO: should be removed from here will probably in the model?
-    Comment.updateRepliesCount(comment.parentId)
-    User.updateCommentsCount(comment.creator)
-  }
+//   // render comments list view
+//   (req, res, next) => {
+//     res.render('comments/index', {
+//       title: '1 Po.st',
+//       description: 'Internet community',
+//       parentId: ROOT_PARENT_ID,
+//       ROOT_PARENT_ID: ROOT_PARENT_ID
+//     })
+//   }
+// )
 
-)
+// // Create comment
+// router.post('/c/create',
 
-// Show comment
-router.get('/c/:id',
+//   // save comment to db
+//   (req, res, next) => {
+//     new Comment({
+//       textSource: req.body.textSource,
+//       parentId: req.body.parentId,
+//       creator: req.user._id
+//     })
+//     .save()
+//     .catch(next)
+//     .then(comment => {
+//       res.locals.comment = comment
+//       next()
+//     })
+//   },
 
-  // load comment
-  (req, res, next) => {
-    Comment
-    .findById(req.params.id)
-    .populate({
-      path: 'creator',
-      select: 'username'
-    })
-    .select('-textSource')
-    .exec()
-    .catch(next)
-    .then(comment => {
-      res.locals.comment = comment
-      next()
-    })
-  },
+//   // redirect to comment show without layout
+//   (req, res, next) => {
+//     var comment = res.locals.comment
+//     res.redirect('/c/' + comment._id)
 
-  // if comment not found
-  (req, res, next) => {
-    if (res.locals.comment) return next()
-    // TODO: There still need to refactoring
-    var err = new Error('Comment Not Found')
-    err.status = 404
-    next(err)
-  },
+//     // TODO: should be removed from here will probably in the model?
+//     Comment.updateRepliesCount(comment.parentId)
+//     User.updateCommentsCount(comment.creator)
+//   }
 
-  // render comment without layout if requested via ajax
-  (req, res, next) => {
-    if (!req.xhr) return next()
-    res.render('comments/includes/comment', {
-      ROOT_PARENT_ID: ROOT_PARENT_ID
-    })
-  },
+// )
 
-  // render comment show page with layout
-  (req, res, next) => {
-    var comment = res.locals.comment
+// // Show comment
+// router.get('/c/:id',
 
-    res.render('comments/show', {
-      ROOT_PARENT_ID: ROOT_PARENT_ID,
-      title: comment.metaTitle,
-      description: comment.metaDescription,
-      parentId: comment._id
-    })
-  }
-)
+//   // load comment
+//   (req, res, next) => {
+//     Comment
+//     .findById(req.params.id)
+//     .populate({
+//       path: 'creator',
+//       select: 'username'
+//     })
+//     .select('-textSource')
+//     .exec()
+//     .catch(next)
+//     .then(comment => {
+//       res.locals.comment = comment
+//       next()
+//     })
+//   },
 
-// GET /comments/:id/replies
-router.get('/c/:id/replies',
-  (req, res, next) => {
-    var sort = ROOT_PARENT_ID.equals(req.params.id) ? -1 : 1
+//   // if comment not found
+//   (req, res, next) => {
+//     if (res.locals.comment) return next()
+//     // TODO: There still need to refactoring
+//     var err = new Error('Comment Not Found')
+//     err.status = 404
+//     next(err)
+//   },
 
-    Comment
-      .find({
-        parentId: req.params.id,
-        isDeleted: {
-          $ne: true
-        }
-      })
-      .populate({
-        path: 'creator',
-        select: 'username'
-      })
-      .limit(20)
-      .sort({ createdAt: sort })
-      .select('-textSource')
-      .exec()
-      .catch(next)
-      .then(comments => {
-        res.locals.comments = comments
-        next()
-      })
-  },
+//   // render comment without layout if requested via ajax
+//   (req, res, next) => {
+//     if (!req.xhr) return next()
+//     res.render('comments/includes/comment', {
+//       ROOT_PARENT_ID: ROOT_PARENT_ID
+//     })
+//   },
 
-  (req, res, next) => {
-    res.render('comments/replies', {
-      title: 'Comments root',
-      parentId: req.params.id,
-      ROOT_PARENT_ID: ROOT_PARENT_ID
-    })
-  }
-)
+//   // render comment show page with layout
+//   (req, res, next) => {
+//     var comment = res.locals.comment
 
-// POST /comments/:id/delete
-router.post('/c/:id/delete',
+//     res.render('comments/show', {
+//       ROOT_PARENT_ID: ROOT_PARENT_ID,
+//       title: comment.metaTitle,
+//       description: comment.metaDescription,
+//       parentId: comment._id
+//     })
+//   }
+// )
 
-  // load comment
-  (req, res, next) => {
-    Comment
-    .findById(req.params.id)
-    .populate({
-      path: 'creator',
-      select: 'username _id'
-    })
-    .select('-textSource')
-    .exec()
-    .catch(next)
-    .then(comment => {
-      res.locals.comment = comment
-      next()
-    })
-  },
+// // GET /comments/:id/replies
+// router.get('/c/:id/replies',
+//   (req, res, next) => {
+//     var sort = ROOT_PARENT_ID.equals(req.params.id) ? -1 : 1
 
-  (req, res, next) => {
-    if (adminUsername !== req.user.username && !req.user._id.equals(res.locals.comment.creator._id)) return res.status(403).json({error: 'Permission denied'})
-    next()
-  },
+//     Comment
+//       .find({
+//         parentId: req.params.id,
+//         isDeleted: {
+//           $ne: true
+//         }
+//       })
+//       .populate({
+//         path: 'creator',
+//         select: 'username'
+//       })
+//       .limit(20)
+//       .sort({ createdAt: sort })
+//       .select('-textSource')
+//       .exec()
+//       .catch(next)
+//       .then(comments => {
+//         res.locals.comments = comments
+//         next()
+//       })
+//   },
 
-  (req, res, next) => {
-    var comment = res.locals.comment
+//   (req, res, next) => {
+//     res.render('comments/replies', {
+//       title: 'Comments root',
+//       parentId: req.params.id,
+//       ROOT_PARENT_ID: ROOT_PARENT_ID
+//     })
+//   }
+// )
 
-    comment.isDeleted = true
+// // POST /comments/:id/delete
+// router.post('/c/:id/delete',
 
-    comment.save((err, comment) => {
-      if (err) return next(err)
-      res.redirect('/c/' + comment._id)
-    })
+//   // load comment
+//   (req, res, next) => {
+//     Comment
+//     .findById(req.params.id)
+//     .populate({
+//       path: 'creator',
+//       select: 'username _id'
+//     })
+//     .select('-textSource')
+//     .exec()
+//     .catch(next)
+//     .then(comment => {
+//       res.locals.comment = comment
+//       next()
+//     })
+//   },
 
-    Comment.updateRepliesCount(comment.parentId)
-    User.updateCommentsCount(comment.creator)
-  }
-)
+//   (req, res, next) => {
+//     if (adminUsername !== req.user.username && !req.user._id.equals(res.locals.comment.creator._id)) return res.status(403).json({error: 'Permission denied'})
+//     next()
+//   },
 
-module.exports = router
+//   (req, res, next) => {
+//     var comment = res.locals.comment
+
+//     comment.isDeleted = true
+
+//     comment.save((err, comment) => {
+//       if (err) return next(err)
+//       res.redirect('/c/' + comment._id)
+//     })
+
+//     Comment.updateRepliesCount(comment.parentId)
+//     User.updateCommentsCount(comment.creator)
+//   }
+// )
+
+// module.exports = router
