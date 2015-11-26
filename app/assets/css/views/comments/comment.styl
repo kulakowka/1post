@@ -1,16 +1,16 @@
 .replies .commentItem
-  margin-top 30px
+  // margin-top 20px
 .commentItem + .commentItem
   margin-top 0px
-
+  
 article.commentItem
   display block
   margin 0 -10px
-  padding 10px 10px
+  padding 10px 10px 5px
   position relative
   @media all and (min-width: minWidth)
     margin 0 -20px
-    padding 20px 20px
+    padding 15px 20px 5px
   &.deleted
     background-color rgba(0, 0, 0, 0.05)
     .textHtml
@@ -33,8 +33,29 @@ article.commentItem
       line-height 1.2em
       a
         color blackColor
-    
-    p, h1, h2, h3, h4, h5, h6
+    p
+      margin 0.6em 0
+    h1
+      font-size 1.8em
+      margin 0.8em 0 0
+    h2
+      font-size 1.6em
+      margin 1em 0 0
+    h3
+      font-size 1.4em
+      margin 1.2em 0 0
+    h4
+      font-size 1.2em
+      margin 1.4em 0 0
+    h5
+      font-size 1em
+      margin 1.6em 0 0
+    h6
+      font-size 0.8em
+      margin 1.8em 0 0
+      
+    p, h1, h2, h3, h4, h5, h6, pre
+      
       
       &:first-child
         margin-top 0
@@ -42,7 +63,7 @@ article.commentItem
         margin-bottom 0
     blockquote
       color #666
-      margin 0
+      margin 0.6em 0
       padding 0
       padding-left 14px
       font-style italic
@@ -73,7 +94,6 @@ article.commentItem
   .meta
     font-size smallFontSize - 1
     line-height 30px
-    margin-top 5px
     
     .repliesCount,
     .reply,
@@ -83,6 +103,7 @@ article.commentItem
     .parentId
       display inline-block
       margin-right 20px
+      // background yellow
       
     .repliesCount,
     .creator,
@@ -98,5 +119,6 @@ article.commentItem
     margin-left 20px            
 
 .commentItem.commentRoot      
+  margin-top 20px
   > .replies
     margin-left 0px
