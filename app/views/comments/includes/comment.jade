@@ -19,12 +19,15 @@ article.commentItem(itemscope itemtype="http://schema.org/Article" id="comment_"
     if !comment.parentId.equals(ROOT_PARENT_ID)
       a.parentId(href="/c/" + comment.parentId) parent
 
-    if !comment.isDeleted && currentUser && currentUser.can('delete', comment)
-      .controls
-        .dropdown
-          .handler.js-dropdown-handler(tabindex=1)
-            span.icon-keyboard_control
-          .menu
-            a.js-comment-delete(href="#delete" data-id=comment._id.toString()) delete
+    .controls
+      .dropdown
+        .handler.js-dropdown-handler(tabindex=1)
+          span.icon-keyboard_control
+        .menu
+          if !comment.isDeleted && currentUser && currentUser.can('delete', comment)
+            a.js-comment-delete(href="#delete" data-id=comment._id.toString()) Delete comment
+          a(href="http://twitter.com/intent/tweet?text=" + comment.metaTitle + "+http://1po.st/c/" + comment._id + "+%231post" rel="nofollow" target="_blank") Share to Twitter
+          a(href="https://www.facebook.com/sharer/sharer.php?u=http://1po.st/c/" + comment._id rel="nofollow" onclick="window.open(this.href, 'Опубликовать ссылку в Facebook', 'width=640,height=436,toolbar=0,status=0'); return false" target="_blank") Share to Facebook
+            
 
   .replies
