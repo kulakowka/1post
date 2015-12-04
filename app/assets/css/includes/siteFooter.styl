@@ -1,6 +1,6 @@
 .layout
   footer
-    margin 20px -10px -10
+    margin 20px -10px -20px
     @media all and (min-width: minWidth)
       margin 20px -20px -20px
     display block
@@ -25,3 +25,10 @@
         margin-left 20px
       a
         color darkGreyColor
+    @media all and (max-width: 550px)
+      .about
+        margin-bottom 20px
+      .about,
+      .menu
+        float none
+        text-align center
