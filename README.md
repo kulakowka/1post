@@ -34,6 +34,6 @@ You must change it, if you want to run in production.
 
 #### Google Analytics Dashboard
 
-I set up a special dashboards to monitor the most important parameters of the project. This is [link to GA report template](https://www.google.com/analytics/web/template?uid=645KqV6oR4a7bJ4pJ_Cu9A).
+I set up a special dashboards to monitor the most important parameters of the project. This is [link to GA report template](https://www.google.com/analytics/web/template?uid=3PsdrhXNQX6EGOWeZjIgCw).
 
 ![GA report template](https://habrastorage.org/files/df9/41d/085/df941d08522f4322a29339e96f11c186.png)
