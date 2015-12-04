@@ -22,6 +22,8 @@ PORT=3000 NODE_ENV=production forever start ./bin/www --harmony
 
 #### Default environment variables:
 
+You must change it, if you want to run in production.
+
 - `ADMIN_USERNAME=kulakowka`
 - `COOKIE_SECRET=1P0F55gj3dsss777kllpom`
 - `MAILGUN_DOMAIN=sandboxa2fa6aec1054486ba188ee59ad0fcdbd.mailgun.org`
@@ -30,4 +32,7 @@ PORT=3000 NODE_ENV=production forever start ./bin/www --harmony
 - `PORT=3000`
 - `NODE_ENV=production`
 
-You must change it, if you want to run in production.
+#### Google Analytics Dashboard
+
+I set up a special dashboards to monitor the most important parameters of the project. This is [link to GA report template](https://www.google.com/analytics/web/template?uid=645KqV6oR4a7bJ4pJ_Cu9A).
+
