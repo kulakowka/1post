@@ -4,10 +4,14 @@ var attachFastClick = require('fastclick')
 attachFastClick(document.body)
 
 var comments = require('./includes/comments')
-var users = require('./includes/users')
 var dropdown = require('./helpers/dropdown')
+var ga = require('./helpers/ga')
+var users = require('./includes/users')
 
 $(document)
+
+  // ga
+  .on('click', '.articleBody h2 a', ga.onArticleTitleClickHandler)
 
   // comments
   .on('submit', '.js-form-comment', comments.commentCreate)

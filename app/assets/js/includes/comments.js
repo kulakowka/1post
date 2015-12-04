@@ -1,4 +1,5 @@
 /* global ga */
+
 var $ = require('jquery')
 var autosize = require('autosize')
 
