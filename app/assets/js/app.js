@@ -11,7 +11,7 @@ var users = require('./includes/users')
 $(document)
 
   // ga
-  .on('click', '.articleBody h2 a', ga.onArticleTitleClickHandler)
+  .on('click', 'article .textHtml h2 a', ga.onArticleTitleClickHandler)
 
   // comments
   .on('submit', '.js-form-comment', comments.commentCreate)
